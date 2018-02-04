@@ -4,6 +4,9 @@ import './MainView.css'
 import * as api from './../utils/api'
 import { Affix, Select, Icon, Row, Col, List, Button, Layout } from 'antd'
 import 'antd/dist/antd.css'
+import 'antd/dist/antd.css' 
+import { connect } from 'react-redux'
+import { fetchCategories  } from '../actions'
 
 const { Header, Footer, Content } = Layout;
 
