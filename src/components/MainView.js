@@ -110,3 +110,9 @@ function mapStateToProps (state) {
   }
 }
 
+function mapDispatchToProps (dispatch) {
+  return {
+    getCategories: () => dispatch(fetchCategories())
+  }
+}
+
