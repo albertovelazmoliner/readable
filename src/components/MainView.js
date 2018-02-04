@@ -11,6 +11,12 @@ import { fetchCategories  } from '../actions'
 const { Header, Footer, Content } = Layout;
 
 class MainView extends Component {
+  componentDidMount() {
+    if (this.props.categories.length === 0) {
+      this.props.getCategories()
+    }
+  }
+
   render() {
     const Option = Select.Option
 
