@@ -48,11 +48,6 @@ class MainView extends Component {
         commentCount: 0
       }
     ]
-    const dataCategories = [
-      'React',
-      'Redux',
-      'Javascript'
-    ];
     return (
       <div>
         <Layout>
