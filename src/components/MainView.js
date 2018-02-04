@@ -104,3 +104,9 @@ class MainView extends Component {
 }
 
 export default MainView;
+function mapStateToProps (state) {
+  return {
+    categories: state.categories
+  }
+}
+
