@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import './MainView.css'
 import * as api from './../utils/api'
 import { Affix, Select, Icon, Row, Col, List, Button, Layout } from 'antd'
-import 'antd/dist/antd.css'
 import 'antd/dist/antd.css' 
 import { connect } from 'react-redux'
 import { fetchCategories  } from '../actions'
@@ -48,6 +47,7 @@ class MainView extends Component {
         commentCount: 0
       }
     ]
+
     return (
       <div>
         <Layout>
@@ -61,10 +61,10 @@ class MainView extends Component {
                 <h3 style={{ margin: '16px 0' }}>Categories</h3>
                 <List
                   bordered
-                  dataSource={dataCategories}
+                  dataSource={this.props.categories}
                   renderItem= {
                     item => (<List.Item >
-                      <Link to={'/category/' + item}><div>{item}</div></Link>
+                      <Link to={'/category/' + item.path}><div>{item.name}</div></Link>
                       </List.Item>)
                   }
                 />
@@ -104,7 +104,6 @@ class MainView extends Component {
   }
 }
 
-export default MainView;
 function mapStateToProps (state) {
   return {
     categories: state.categories
