@@ -9,6 +9,7 @@ export const DELETE_COMMENT = 'DELETE_COMMENT'
 export const VOTE_POST = 'VOTE_POST'
 export const VOTE_COMMENT = 'VOTE_COMMENT'
 export const REQUEST_ALL_POSTS = 'REQUEST_ALL_POSTS'
+export const RECEIVE_ALL_POSTS = 'RECEIVE_ALL_POSTS'
 export const RECEIVE_CATEGORIES = 'RECEIVE_CATEGORIES'
 export const REQUEST_ALL_COMMENTS = 'REQUEST_ALL_COMMENTS'
 export const REQUEST_POST = 'REQUEST_POST'
@@ -58,6 +59,11 @@ export const requestAllPosts = () => ({
   type: REQUEST_ALL_POSTS
 })
 
+export const receiveAllPosts = (posts) => ({
+  type: RECEIVE_ALL_POSTS,
+  posts
+})
+
 export const requestAllComments = () => ({
   type: REQUEST_ALL_COMMENTS
 })
@@ -74,3 +80,9 @@ export const fetchCategories = () => dispatch => (
     )
   )
 )
+
+export const fetchAllPosts = () => dispatch => {
+  dispatch(requestAllPosts())
+  return api.getAllPosts()
+    .then(posts => dispatch(receiveAllPosts(posts)))
+}
