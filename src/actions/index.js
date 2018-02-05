@@ -10,9 +10,10 @@ export const VOTE_POST = 'VOTE_POST'
 export const VOTE_COMMENT = 'VOTE_COMMENT'
 export const REQUEST_ALL_POSTS = 'REQUEST_ALL_POSTS'
 export const RECEIVE_ALL_POSTS = 'RECEIVE_ALL_POSTS'
+export const REQUEST_POST = 'REQUEST_POST'
+export const RECEIVE_POST = 'RECEIVE_POST'
 export const RECEIVE_CATEGORIES = 'RECEIVE_CATEGORIES'
 export const REQUEST_ALL_COMMENTS = 'REQUEST_ALL_COMMENTS'
-export const REQUEST_POST = 'REQUEST_POST'
 export const REQUEST_COMMENT = 'REQUEST_COMMENT'
 
 export const addPost = (post) => ({
@@ -64,6 +65,15 @@ export const receiveAllPosts = (posts) => ({
   posts
 })
 
+export const requestPost = () => ({
+  type: REQUEST_POST
+})
+
+export const receivePost = (post) => ({
+  type: RECEIVE_POST,
+  post
+})
+
 export const requestAllComments = () => ({
   type: REQUEST_ALL_COMMENTS
 })
@@ -78,11 +88,19 @@ export const fetchCategories = () => dispatch => (
     .then(categories => dispatch(
       receiveCategories(categories)
     )
-  )
+  ).catch(error => console.log(`Error`, error))
 )
 
 export const fetchAllPosts = () => dispatch => {
   dispatch(requestAllPosts())
   return api.getAllPosts()
     .then(posts => dispatch(receiveAllPosts(posts)))
+    .catch(error => console.log(`Error`, error))
+}
+
+export const fetchPost = (postId) => dispatch => {
+  dispatch(requestPost())
+  return api.getPost(postId)
+    .then(post => dispatch(receivePost(post)))
+    .catch(error => console.log(`Error`, error))
 }
