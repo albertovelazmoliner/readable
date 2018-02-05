@@ -11,10 +11,10 @@ const { Header, Footer, Content } = Layout;
 
 class MainView extends Component {
   componentDidMount() {
-    //if (this.props.categories.length === 0) {
+    if (this.props.categories.length === 0) {
       this.props.getCategories()
-      this.props.getAllPosts()
-    //}
+    }
+    this.props.getAllPosts()
   }
 
   render() {
@@ -27,9 +27,7 @@ class MainView extends Component {
     return (
       <div>
         <Layout>
-          <Header>
-            Readable Project
-          </Header>
+          <Header>Readable Project</Header> 
 
           <Content>
           <Row>
