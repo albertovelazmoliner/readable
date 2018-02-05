@@ -1,6 +1,9 @@
 import { combineReducers } from 'redux'
+
 import {
-  RECEIVE_CATEGORIES
+  RECEIVE_CATEGORIES,
+  REQUEST_ALL_POSTS,
+  RECEIVE_ALL_POSTS
 } from './../actions'
  
 const categories = (
@@ -20,4 +23,33 @@ const categories = (
   }
 }
 
-export default categories
+const posts = (
+  state = {
+    posts:[],
+    isLoading: false
+  },
+  action
+) => {
+  switch (action.type) {
+    case REQUEST_ALL_POSTS:
+      return {
+        ...state,
+        isLoading: true
+      }
+    case RECEIVE_ALL_POSTS:
+      console.log(`RECEIVE_ALL_POSTS`, RECEIVE_ALL_POSTS)
+      return {
+        ...state,
+        isLoading: false,
+        posts: action.posts
+      }
+    default:
+      return state
+  }
+}
+
+export default combineReducers({
+  categories,
+  posts
+})
+  
