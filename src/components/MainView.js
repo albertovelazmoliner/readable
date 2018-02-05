@@ -5,15 +5,16 @@ import * as api from './../utils/api'
 import { Affix, Select, Icon, Row, Col, List, Button, Layout } from 'antd'
 import 'antd/dist/antd.css' 
 import { connect } from 'react-redux'
-import { fetchCategories  } from '../actions'
+import { fetchCategories, fetchAllPosts } from '../actions'
 
 const { Header, Footer, Content } = Layout;
 
 class MainView extends Component {
   componentDidMount() {
-    if (this.props.categories.length === 0) {
+    //if (this.props.categories.length === 0) {
       this.props.getCategories()
-    }
+      this.props.getAllPosts()
+    //}
   }
 
   render() {
@@ -22,31 +23,6 @@ class MainView extends Component {
     function handleChange(value) {
       console.log(`selected ${value}`);
     }
-    
-    const postData = [
-      {
-        id: '8xf0y6ziyjabvozdd253nd',
-        timestamp: 1467166872634,
-        title: 'Udacity is the best place to learn React',
-        body: 'Everyone says so after all.',
-        author: 'thingtwo',
-        category: 'react',
-        voteScore: 6,
-        deleted: false,
-        commentCount: 2
-      },
-      {
-        id: '6ni6ok3ym7mf1p33lnez',
-        timestamp: 1468479767190,
-        title: 'Learn Redux in 10 minutes!',
-        body: 'Just kidding. It takes more than 10 minutes to learn technology.',
-        author: 'thingone',
-        category: 'redux',
-        voteScore: -5,
-        deleted: false,
-        commentCount: 0
-      }
-    ]
 
     return (
       <div>
@@ -79,7 +55,7 @@ class MainView extends Component {
                 <List
                   className="categories-list"
                   bordered
-                  dataSource={postData}
+                  dataSource={this.props.posts}
                   renderItem= {
                     post => (<List.Item key={post.id}>
                       <Link to={'/post/' + post.id}><strong>{post.title}</strong></Link> <br/> {post.author} <br/>
@@ -106,13 +82,15 @@ class MainView extends Component {
 
 function mapStateToProps (state) {
   return {
-    categories: state.categories
+    categories: state.categories.categories,
+    posts: state.posts.posts
   }
 }
 
 function mapDispatchToProps (dispatch) {
   return {
-    getCategories: () => dispatch(fetchCategories())
+    getCategories: () => dispatch(fetchCategories()),
+    getAllPosts: () => dispatch(fetchAllPosts())
   }
 }
 
