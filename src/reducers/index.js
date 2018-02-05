@@ -3,7 +3,8 @@ import { combineReducers } from 'redux'
 import {
   RECEIVE_CATEGORIES,
   REQUEST_ALL_POSTS,
-  RECEIVE_ALL_POSTS
+  RECEIVE_ALL_POSTS,
+  RECEIVE_POST
 } from './../actions'
  
 const categories = (
@@ -26,7 +27,8 @@ const categories = (
 const posts = (
   state = {
     posts:[],
-    isLoading: false
+    isLoading: false,
+    currentPost:null
   },
   action
 ) => {
@@ -37,12 +39,18 @@ const posts = (
         isLoading: true
       }
     case RECEIVE_ALL_POSTS:
-      console.log(`RECEIVE_ALL_POSTS`, RECEIVE_ALL_POSTS)
       return {
         ...state,
         isLoading: false,
         posts: action.posts
       }
+    case RECEIVE_POST:
+      return {
+        ...state,
+        isLoading: false,
+        currentPost: action.post
+      }
+
     default:
       return state
   }
