@@ -4,6 +4,8 @@ import {
   RECEIVE_CATEGORIES,
   REQUEST_ALL_POSTS,
   RECEIVE_ALL_POSTS,
+  REQUEST_ALL_COMMENTS,
+  RECEIVE_ALL_COMMENTS,
   RECEIVE_POST
 } from './../actions'
  
@@ -56,8 +58,35 @@ const posts = (
   }
 }
 
+const comments = (
+  state = {
+    comments: [],
+    isLoading: false,
+    currentComment: null
+  },
+  action
+) => {
+  switch(action.type) {
+    case REQUEST_ALL_COMMENTS:
+      return {
+        ...state,
+        isLoading: true
+      }
+    case RECEIVE_ALL_COMMENTS:
+      return {
+        ...state,
+        isLoading: false,
+        comments: action.comments
+      }
+    default:
+      return state
+  }
+}
+
+
 export default combineReducers({
   categories,
-  posts
+  posts,
+  comments
 })
   
