@@ -14,6 +14,7 @@ export const REQUEST_POST = 'REQUEST_POST'
 export const RECEIVE_POST = 'RECEIVE_POST'
 export const RECEIVE_CATEGORIES = 'RECEIVE_CATEGORIES'
 export const REQUEST_ALL_COMMENTS = 'REQUEST_ALL_COMMENTS'
+export const RECEIVE_ALL_COMMENTS = 'RECEIVE_ALL_COMMENTS'
 export const REQUEST_COMMENT = 'REQUEST_COMMENT'
 
 export const addPost = (post) => ({
@@ -65,6 +66,15 @@ export const receiveAllPosts = (posts) => ({
   posts
 })
 
+export const requestAllComments = () => ({
+  type: REQUEST_ALL_COMMENTS
+})
+
+export const receiveAllComments = (comments) => ({
+  type: RECEIVE_ALL_COMMENTS,
+  comments
+})
+
 export const requestPost = () => ({
   type: REQUEST_POST
 })
@@ -72,10 +82,6 @@ export const requestPost = () => ({
 export const receivePost = (post) => ({
   type: RECEIVE_POST,
   post
-})
-
-export const requestAllComments = () => ({
-  type: REQUEST_ALL_COMMENTS
 })
 
 export const receiveCategories = categories => ({
@@ -102,5 +108,12 @@ export const fetchPost = (postId) => dispatch => {
   dispatch(requestPost())
   return api.getPost(postId)
     .then(post => dispatch(receivePost(post)))
+    .catch(error => console.log(`Error`, error))
+}
+
+export const fetchAllComentss = (postId) => dispatch => {
+  dispatch(requestAllComments())
+  return api.getAllComments(postId)
+    .then(comments => dispatch(receiveAllComments(comments)))
     .catch(error => console.log(`Error`, error))
 }
