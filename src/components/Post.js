@@ -1,7 +1,7 @@
 import React, { Component } from  'react'
 import { connect } from 'react-redux'
-import { fetchPost } from '../actions'
-import { Card, Icon, List } from 'antd'
+import { fetchPost, fetchAllComentss } from '../actions'
+import { Card, Icon, List, Button } from 'antd'
 import moment from 'moment'
 
 class Post extends Component {
@@ -14,6 +14,7 @@ class Post extends Component {
     } else {
       this.props.post = this.posts.filter((post) => postId === post.id)
     }
+    this.props.getComments(postId)
   }
 
   render() {
@@ -26,21 +27,39 @@ class Post extends Component {
         </div>)
     }
     return (
-      <div>
+      <div style={{padding:20}}>
         <Card title={postData.title} style={{ width:"50%", margin:"auto"}}
-          actions={[<Icon type="edit" />, <Icon type="delete"/>, <Icon type="like"/>, <Icon type="dislike"/>]}>
-          <h2><p>{postData.author}</p></h2>
+          actions={[
+            <Icon type="edit" />, 
+            <Icon type="delete"/>, 
+            <Icon type="like"/>, 
+            <Icon type="dislike"/>,
+            <Icon type="plus"/>
+          ]}>
+          <h2><p>Author: {postData.author}</p></h2>
           <h3><p>{postData.body}</p></h3>
           <p>Votes: {postData.voteScore}</p>
           <p>{moment(postData.timestamp).format('LLL')}</p>
         </Card>
-        <h3 style={{ width:"50%", margin:"auto" }}>Comments:</h3>
+        <br/>
+        <h3 style={{ width:"50%", margin:"auto" }}>Comments:
+        <Button type="primary" icon="plus" size="large" style={{float:"right"}}>Add new comment</Button> </h3>
+        
+        <br/>
         <List
           bordered
-          dataSource={{}}
+          dataSource={this.props.comments}
           renderItem= {
-            item => (<List.Item >
-             <div>{item.name}</div>
+            comment => (<List.Item >
+             <div>
+              <p>{comment.body}</p>
+              <p>Votes: {comment.voteScore}</p>
+              <p>
+                <Button shape="circle" icon="like" style={{margin:10}}/> 
+                <Button shape="circle" icon="dislike" style={{margin:10}}/>
+                <Button shape="circle" icon="edit" style={{margin:10}}/>
+                <Button shape="circle" icon="delete" style={{margin:10}}/></p>
+            </div>
               </List.Item>)
           }
           style={{ width:"50%", margin:"auto"}}
@@ -55,13 +74,15 @@ function mapStateToProps (state) {
   console.log(state)
   return {
     posts: state.posts.posts,
-    post: state.posts.currentPost
+    post: state.posts.currentPost,
+    comments: state.comments.comments
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    getPost: (postId) => dispatch(fetchPost(postId))
+    getPost: (postId) => dispatch(fetchPost(postId)),
+    getComments: (postId) => dispatch(fetchAllComentss(postId))
   }
   
 }
