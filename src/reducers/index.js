@@ -83,10 +83,46 @@ const comments = (
   }
 }
 
+const posts2 = (
+  state = {
+    isLoading: false,
+    currentPost:null,
+    posts:{}
+  },
+  action
+) => {
+  switch (action.type) {
+    case REQUEST_ALL_POSTS:
+      return {
+        ...state,
+        isLoading: true
+      }
+    case RECEIVE_ALL_POSTS:
+      return {
+        ...state,
+        isLoading: false,
+        posts: action.posts.reduce((accumulator, post) => {
+          accumulator[post.id] = post
+          return accumulator
+        }, {})
+      }
+    case RECEIVE_POST:
+      return {
+        ...state,
+        isLoading: false,
+        currentPost: action.post
+      }
+
+    default:
+      return state
+  }
+}
 
 export default combineReducers({
   categories,
   posts,
+  posts2,
   comments
 })
-  
+
+
