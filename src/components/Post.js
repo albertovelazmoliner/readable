@@ -3,8 +3,18 @@ import { connect } from 'react-redux'
 import { fetchPost, fetchAllComentss } from '../actions'
 import { Card, Icon, List, Button } from 'antd'
 import moment from 'moment'
+import { Link } from 'react-router-dom'
+import './Post.css'
+import CommentForm from './CommentForm'
 
 class Post extends Component {
+
+  state = {
+    commentFormVisibility: false,
+    commentFormOk: "Save",
+    commentFormCancel: "Cancel"
+  }
+  
 
   componentDidMount() {
     console.log(this.props.match.params.id)
@@ -15,6 +25,24 @@ class Post extends Component {
       this.props.post = this.posts.filter((post) => postId === post.id)
     }
     this.props.getComments(postId)
+  }
+
+
+  showModal = () => {
+    this.setState({
+      commentFormVisibility: true
+    });
+  }
+  hideModal = () => {
+    this.setState({
+      commentFormVisibility: false
+    });
+  }
+  saveComment = (comment) => {
+    console.log(comment)
+    this.setState({
+      commentFormVisibility: false
+    });
   }
 
   render() {
@@ -33,8 +61,7 @@ class Post extends Component {
             <Icon type="edit" />, 
             <Icon type="delete"/>, 
             <Icon type="like"/>, 
-            <Icon type="dislike"/>,
-            <Icon type="plus"/>
+            <Icon type="dislike"/>
           ]}>
           <h2><p>Author: {postData.author}</p></h2>
           <h3><p>{postData.body}</p></h3>
@@ -42,9 +69,9 @@ class Post extends Component {
           <p>{moment(postData.timestamp).format('LLL')}</p>
         </Card>
         <br/>
-        <h3 style={{ width:"50%", margin:"auto" }}>Comments:
-        <Button type="primary" icon="plus" size="large" style={{float:"right"}}>Add new comment</Button> </h3>
-        
+        <div className="flex-container">
+        <h3>Comments:</h3>
+        </div>
         <br/>
         <List
           bordered
@@ -64,6 +91,22 @@ class Post extends Component {
           }
           style={{ width:"50%", margin:"auto"}}
         />
+        <Link to="/addPost">
+          <Button className="new-post" type="primary" icon="plus" size="large">
+            Add a new post
+          </Button>
+        </Link>
+        <Button className="new-comment" type="primary" icon="plus" size="large"
+          onClick={this.showModal}>
+          Add a new comment
+        </Button>
+
+        <CommentForm 
+          visible={this.state.commentFormVisibility}  
+          okText={this.state.commentFormOk}
+          cancelText={this.state.commentFormCancel}
+          onCancel = {() => this.hideModal()}
+          onOk = {(comment) =>  this.saveComment(comment)} />
       </div>
     )
   }
