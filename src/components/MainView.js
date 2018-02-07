@@ -53,7 +53,8 @@ class MainView extends Component {
                 <List
                   className="categories-list"
                   bordered
-                  dataSource={this.props.posts}
+                  dataSource={Object.keys(this.props.posts2).map
+                  (key => this.props.posts2[key])}
                   renderItem= {
                     post => (<List.Item key={post.id}>
                       <Link to={'/post/' + post.id}><strong>{post.title}</strong></Link> <br/> {post.author} <br/>
@@ -81,7 +82,8 @@ class MainView extends Component {
 function mapStateToProps (state) {
   return {
     categories: state.categories.categories,
-    posts: state.posts.posts
+    posts: state.posts.posts,
+    posts2: state.posts2.posts
   }
 }
 
