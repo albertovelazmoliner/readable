@@ -22,7 +22,7 @@ class Post extends Component {
     if (!this.posts) {
       this.props.getPost(postId)
     } else {
-      this.props.post = this.posts.filter((post) => postId === post.id)
+      this.props.post = this.posts2[postId]
     }
     this.props.getComments(postId)
   }
@@ -117,6 +117,7 @@ function mapStateToProps (state) {
   console.log(state)
   return {
     posts: state.posts.posts,
+    posts2: state.posts2.posts,
     post: state.posts.currentPost,
     comments: state.comments.comments
   }
