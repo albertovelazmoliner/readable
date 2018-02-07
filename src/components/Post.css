@@ -1,0 +1,23 @@
+.flex-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin: auto;
+  width: 50%;
+}
+
+.new-comment {
+  position: fixed;
+  bottom:40px;
+  right:40px;
+  width: 220px;
+  text-align: start;
+}
+
+.new-post {
+  position: fixed;
+  bottom:100px;
+  right:40px;
+  width: 220px;
+  text-align: start;
+}
