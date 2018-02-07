@@ -54,21 +54,4 @@ const CommentForm = Form.create()(BaseForm)
 
 export default CommentForm
 
-/*function confirm() {
-  Modal.confirm({
-    title: 'Confirm',
-    content: 'Bla bla ...',
-    okText: '确认',
-    cancelText: '取消',
-  });
-}
-
-ReactDOM.render(
-  <div>
-    <LocalizedModal />
-    <br />
-    <Button onClick={confirm}>Confirm</Button>
-  </div>,
-  mountNode
-);*/
 
