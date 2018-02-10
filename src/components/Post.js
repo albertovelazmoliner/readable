@@ -117,7 +117,6 @@ function mapStateToProps (state) {
   console.log(state)
   return {
     posts: state.posts.posts,
-    posts2: state.posts2.posts,
     post: state.posts.currentPost,
     comments: state.comments.comments
   }
