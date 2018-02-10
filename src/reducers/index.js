@@ -26,38 +26,6 @@ const categories = (
   }
 }
 
-const posts = (
-  state = {
-    posts:[],
-    isLoading: false,
-    currentPost:null
-  },
-  action
-) => {
-  switch (action.type) {
-    case REQUEST_ALL_POSTS:
-      return {
-        ...state,
-        isLoading: true
-      }
-    case RECEIVE_ALL_POSTS:
-      return {
-        ...state,
-        isLoading: false,
-        posts: action.posts
-      }
-    case RECEIVE_POST:
-      return {
-        ...state,
-        isLoading: false,
-        currentPost: action.post
-      }
-
-    default:
-      return state
-  }
-}
-
 const comments = (
   state = {
     comments: [],
@@ -83,7 +51,7 @@ const comments = (
   }
 }
 
-const posts2 = (
+const posts = (
   state = {
     isLoading: false,
     currentPost:null,
@@ -121,7 +89,6 @@ const posts2 = (
 export default combineReducers({
   categories,
   posts,
-  posts2,
   comments
 })
 
