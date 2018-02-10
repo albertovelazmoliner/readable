@@ -32,11 +32,13 @@ class Post extends Component {
     this.setState({
       commentFormVisibility: true
     });
+    })
   }
   hideModal = () => {
     this.setState({
       commentFormVisibility: false
     });
+    })
   }
   saveComment = (comment) => {
     console.log(comment)
