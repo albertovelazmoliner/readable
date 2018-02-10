@@ -47,6 +47,7 @@ class Post extends Component {
 
   render() {
     const postData = this.props.post
+    const comments = this.props.comments
     console.log(this)
     if (!this.props.post) {
       return (
@@ -75,7 +76,7 @@ class Post extends Component {
         <br/>
         <List
           bordered
-          dataSource={this.props.comments}
+          dataSource={Object.keys(comments).map(key => comments[key])}
           renderItem= {
             comment => (<List.Item >
              <div>
