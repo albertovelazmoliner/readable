@@ -40,14 +40,18 @@ class Post extends Component {
   }
   saveComment = (comment) => {
     console.log(comment)
-    this.setState({
-      commentFormVisibility: false
-    });
+    setTimeout(() => {
+      this.setState({
+        commentFormVisibility: false
+      })
+    }, 2000)
+    
   }
 
   render() {
     const postData = this.props.post
     const comments = this.props.comments
+
     console.log(this)
     if (!this.props.post) {
       return (
@@ -127,6 +131,7 @@ function mapDispatchToProps(dispatch) {
   return {
     getPost: (postId) => dispatch(fetchPost(postId)),
     getComments: (postId) => dispatch(fetchAllComentss(postId))
+    
   }
   
 }
