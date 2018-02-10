@@ -31,13 +31,11 @@ class Post extends Component {
   showModal = () => {
     this.setState({
       commentFormVisibility: true
-    });
     })
   }
   hideModal = () => {
     this.setState({
       commentFormVisibility: false
-    });
     })
   }
   saveComment = (comment) => {
