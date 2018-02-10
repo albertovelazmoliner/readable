@@ -28,7 +28,7 @@ const categories = (
 
 const comments = (
   state = {
-    comments: [],
+    comments: {},
     isLoading: false,
     currentComment: null
   },
@@ -44,7 +44,10 @@ const comments = (
       return {
         ...state,
         isLoading: false,
-        comments: action.comments
+        comments: action.comments.reduce((accumulator, comment) => {
+          accumulator[comment.id] = comment
+          return accumulator
+        }, {})
       }
     default:
       return state
