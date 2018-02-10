@@ -117,3 +117,9 @@ export const fetchAllComentss = (postId) => dispatch => {
     .then(comments => dispatch(receiveAllComments(comments)))
     .catch(error => console.log(`Error`, error))
 }
+
+export const createComment = (comment) => dispatch => {
+  return api.postComment(comment)
+    .then(comment => dispatch(addComment(comment)))
+    .catch(error => console.log(`Error`, error))
+}
