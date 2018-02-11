@@ -52,9 +52,9 @@ export const votePost = (id, option) => ({
   id, option
 })
 
-export const voteComment = (id, option) => ({
-  type: VOTE_COMMENT,
-  id, option
+export const voteComment = (comment) => ({
+  type: UPDATE_COMMENT,
+  comment
 })
 
 export const requestAllPosts = () => ({
@@ -122,4 +122,10 @@ export const createComment = (comment) => dispatch => {
   return api.postComment(comment)
     .then(comment => dispatch(addComment(comment)))
     .catch(error => console.log(`Error`, error))
+}
+
+export const postVoteComment = (commentId, voteOption) => dispatch => {
+  return api.voteComment(commentId, voteOption)
+    .then(comment => dispatch(voteComment(comment)))
+    .catch(error => console.log(error))
 }
