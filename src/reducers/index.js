@@ -6,7 +6,8 @@ import {
   RECEIVE_ALL_POSTS,
   REQUEST_ALL_COMMENTS,
   RECEIVE_ALL_COMMENTS,
-  RECEIVE_POST
+  RECEIVE_POST,
+  ADD_COMMENT
 } from './../actions'
  
 const categories = (
@@ -48,6 +49,16 @@ const comments = (
           accumulator[comment.id] = comment
           return accumulator
         }, {})
+      }
+    case ADD_COMMENT:
+      console.log(action.comment)
+      return {
+        ...state,
+        isLoading: false,
+        comments: {
+          ...state.comments,
+          [action.comment.id] : action.comment
+        }
       }
     default:
       return state
