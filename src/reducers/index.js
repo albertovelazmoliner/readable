@@ -7,7 +7,8 @@ import {
   REQUEST_ALL_COMMENTS,
   RECEIVE_ALL_COMMENTS,
   RECEIVE_POST,
-  ADD_COMMENT
+  ADD_COMMENT,
+  UPDATE_COMMENT
 } from './../actions'
  
 const categories = (
@@ -51,7 +52,15 @@ const comments = (
         }, {})
       }
     case ADD_COMMENT:
-      console.log(action.comment)
+      return {
+        ...state,
+        isLoading: false,
+        comments: {
+          ...state.comments,
+          [action.comment.id] : action.comment
+        }
+      }
+    case UPDATE_COMMENT:
       return {
         ...state,
         isLoading: false,
