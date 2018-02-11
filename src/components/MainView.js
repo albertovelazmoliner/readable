@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import './MainView.css'
-import * as api from './../utils/api'
 import { Affix, Select, Icon, Row, Col, List, Button, Layout } from 'antd'
 import 'antd/dist/antd.css' 
 import { connect } from 'react-redux'
