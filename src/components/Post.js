@@ -1,6 +1,6 @@
 import React, { Component } from  'react'
 import { connect } from 'react-redux'
-import { fetchPost, fetchAllComentss, createComment } from '../actions'
+import { fetchPost, fetchAllComentss, createComment, postVoteComment } from '../actions'
 import { Card, Icon, List, Button } from 'antd'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
@@ -39,9 +39,7 @@ class Post extends Component {
   }
 
   saveComment = (values) => {
-    console.log(values)
     const comment = this.generateDataComment(values)
-    console.log(comment)
     this.props.postComment(comment)
       .then(() => {
         this.setState({
@@ -59,6 +57,20 @@ class Post extends Component {
     comment.timestamp = Date.now()
     comment.parentId = postId
     return comment
+  }
+
+  handleVote = (commentId, option = 'upVote') => {
+    this.props.sendCommentVote(commentId, option)
+      .then(() => {})
+      .catch(error => console.log(error))
+  }
+
+  editComment = (comment) => {
+    console.log(`editComment`, comment)
+  }
+
+  deletComment = (commentId) => {
+    console.log(`deleteComment`, commentId)
   }
 
   render() {
@@ -100,10 +112,15 @@ class Post extends Component {
               <p>{comment.body}</p>
               <p>Votes: {comment.voteScore}</p>
               <p>
-                <Button shape="circle" icon="like" style={{margin:10}}/> 
-                <Button shape="circle" icon="dislike" style={{margin:10}}/>
-                <Button shape="circle" icon="edit" style={{margin:10}}/>
-                <Button shape="circle" icon="delete" style={{margin:10}}/></p>
+                <Button shape="circle" icon="like" style={{margin:10}} 
+                  onClick={() => this.handleVote(comment.id)}/> 
+                <Button shape="circle" icon="dislike" style={{margin:10}}
+                  onClick={() => this.handleVote(comment.id, 'downVote')}/>
+                <Button shape="circle" icon="edit" style={{margin:10}}
+                  onClick={() => this.editComment(comment)}/>
+                <Button shape="circle" icon="delete" style={{margin:10}}
+                  onClick={() => this.deletComment(comment.id)}/>
+              </p>
             </div>
               </List.Item>)
           }
@@ -144,7 +161,8 @@ function mapDispatchToProps(dispatch) {
   return {
     getPost: (postId) => dispatch(fetchPost(postId)),
     getComments: (postId) => dispatch(fetchAllComentss(postId)),
-    postComment: (comment) => dispatch(createComment(comment))
+    postComment: (comment) => dispatch(createComment(comment)),
+    sendCommentVote: (commentId, voteOption) => dispatch(postVoteComment(commentId, voteOption))
   }
   
 }
