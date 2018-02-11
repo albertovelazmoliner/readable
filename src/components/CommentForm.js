@@ -1,5 +1,5 @@
 import React, { Component } from  'react'
-import { Modal, Button, Form, Input, Icon } from 'antd'
+import { Modal, Button, Form, Input } from 'antd'
 
 const { TextArea } = Input;
 const FormItem = Form.Item
@@ -21,7 +21,7 @@ class BaseForm extends Component {
 
   render() {
     
-    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
+    const { getFieldDecorator } = this.props.form;
     return (
       <div>
         <Form onSubmit={this.handleSubmit}>
