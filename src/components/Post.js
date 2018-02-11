@@ -1,11 +1,12 @@
 import React, { Component } from  'react'
 import { connect } from 'react-redux'
-import { fetchPost, fetchAllComentss } from '../actions'
+import { fetchPost, fetchAllComentss, createComment } from '../actions'
 import { Card, Icon, List, Button } from 'antd'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
 import './Post.css'
 import CommentForm from './CommentForm'
+import uuid from 'uuid/v1'
 
 class Post extends Component {
 
@@ -15,9 +16,7 @@ class Post extends Component {
     commentFormCancel: "Cancel"
   }
   
-
   componentDidMount() {
-    console.log(this.props.match.params.id)
     const postId = this.props.match.params.id
     if (!this.posts) {
       this.props.getPost(postId)
@@ -27,25 +26,39 @@ class Post extends Component {
     this.props.getComments(postId)
   }
 
-
   showModal = () => {
     this.setState({
       commentFormVisibility: true
     })
   }
+
   hideModal = () => {
     this.setState({
       commentFormVisibility: false
     })
   }
-  saveComment = (comment) => {
+
+  saveComment = (values) => {
+    console.log(values)
+    const comment = this.generateDataComment(values)
     console.log(comment)
-    setTimeout(() => {
-      this.setState({
-        commentFormVisibility: false
+    this.props.postComment(comment)
+      .then(() => {
+        this.setState({
+          commentFormVisibility: false
+        })
       })
-    }, 2000)
-    
+  }
+
+  generateDataComment = (values) => {
+    const postId = this.props.match.params.id
+    const comment = {}
+    comment.author = values.author
+    comment.body = values.body
+    comment.id = uuid()
+    comment.timestamp = Date.now()
+    comment.parentId = postId
+    return comment
   }
 
   render() {
@@ -130,8 +143,8 @@ function mapStateToProps (state) {
 function mapDispatchToProps(dispatch) {
   return {
     getPost: (postId) => dispatch(fetchPost(postId)),
-    getComments: (postId) => dispatch(fetchAllComentss(postId))
-    
+    getComments: (postId) => dispatch(fetchAllComentss(postId)),
+    postComment: (comment) => dispatch(createComment(comment))
   }
   
 }
