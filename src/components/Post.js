@@ -1,6 +1,6 @@
 import React, { Component } from  'react'
 import { connect } from 'react-redux'
-import { fetchPost, fetchAllComentss, createComment, postVoteComment } from '../actions'
+import { fetchPost, fetchAllComentss, createComment, postVoteComment, putUpdateComment } from '../actions'
 import { Card, Icon, List, Button } from 'antd'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
@@ -11,9 +11,10 @@ import uuid from 'uuid/v1'
 class Post extends Component {
 
   state = {
-    commentFormVisibility: false,
-    commentFormOk: "Save",
-    commentFormCancel: "Cancel"
+    commentAddFormVisibility: false,
+    commentUpdateFormVisibility: false,
+    selectedComment: null,
+    loadingForm: false
   }
   
   componentDidMount() {
@@ -26,24 +27,46 @@ class Post extends Component {
     this.props.getComments(postId)
   }
 
-  showModal = () => {
+  showAddModal = () => {
     this.setState({
-      commentFormVisibility: true
+      commentAddFormVisibility: true
     })
   }
 
-  hideModal = () => {
+  hideAddModal = () => {
     this.setState({
-      commentFormVisibility: false
+      commentAddFormVisibility: false
+    })
+  }
+
+  hideUpdateModal = () => {
+    this.setState({
+      commentUpdateFormVisibility: false,
+      selectedComment: null
     })
   }
 
   saveComment = (values) => {
+    this.setState({ loadingForm: true })
     const comment = this.generateDataComment(values)
     this.props.postComment(comment)
       .then(() => {
         this.setState({
-          commentFormVisibility: false
+          commentAddFormVisibility: false,
+          loadingForm: false
+        })
+      })
+  }
+
+  updateComment = (comment) => {
+    this.setState({ loadingForm: true })
+    const { id, body } = comment
+    this.props.sendCommentUpdate(id, body)
+      .then(()=> {
+        this.setState({
+          commentUpdateFormVisibility: false,
+          selectedComment: null,
+          loadingForm: false
         })
       })
   }
@@ -66,7 +89,11 @@ class Post extends Component {
   }
 
   editComment = (comment) => {
-    console.log(`editComment`, comment)
+    console.log(`comment`,comment)
+    this.setState({
+      commentUpdateFormVisibility: true,
+      selectedComment: comment
+    })
   }
 
   deletComment = (commentId) => {
@@ -77,7 +104,6 @@ class Post extends Component {
     const postData = this.props.post
     const comments = this.props.comments
 
-    console.log(this)
     if (!this.props.post) {
       return (
         <div> 
@@ -111,6 +137,7 @@ class Post extends Component {
              <div>
               <p>{comment.body}</p>
               <p>Votes: {comment.voteScore}</p>
+              <p>{moment(postData.timestamp).format('LLL')}</p>
               <p>
                 <Button shape="circle" icon="like" style={{margin:10}} 
                   onClick={() => this.handleVote(comment.id)}/> 
@@ -132,16 +159,26 @@ class Post extends Component {
           </Button>
         </Link>
         <Button className="new-comment" type="primary" icon="plus" size="large"
-          onClick={this.showModal}>
+          onClick={this.showAddModal}>
           Add a new comment
         </Button>
 
         <CommentForm 
-          visible={this.state.commentFormVisibility}  
-          okText={this.state.commentFormOk}
-          cancelText={this.state.commentFormCancel}
-          onCancel = {() => this.hideModal()}
+          visible={this.state.commentAddFormVisibility}  
+          okText="Save"
+          cancelText="Cancel"
+          onCancel = {() => this.hideAddModal()}
           onOk = {(comment) =>  this.saveComment(comment)} />
+
+        <CommentForm 
+          visible={this.state.commentUpdateFormVisibility}  
+          okText="Save"
+          cancelText="Cancel"
+          update={true}
+          loadingForm={this.state.loadingForm}
+          selectedComment={this.state.selectedComment}
+          onCancel = {() => this.hideUpdateModal()}
+          onOk = {(comment) =>  this.updateComment(comment)} />
       </div>
     )
   }
@@ -162,7 +199,8 @@ function mapDispatchToProps(dispatch) {
     getPost: (postId) => dispatch(fetchPost(postId)),
     getComments: (postId) => dispatch(fetchAllComentss(postId)),
     postComment: (comment) => dispatch(createComment(comment)),
-    sendCommentVote: (commentId, voteOption) => dispatch(postVoteComment(commentId, voteOption))
+    sendCommentVote: (commentId, voteOption) => dispatch(postVoteComment(commentId, voteOption)),
+    sendCommentUpdate: (commentId, body) => dispatch(putUpdateComment(commentId, body))
   }
   
 }
