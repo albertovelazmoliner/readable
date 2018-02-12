@@ -5,33 +5,38 @@ const { TextArea } = Input;
 const FormItem = Form.Item
 
 class BaseForm extends Component {
-  state = {
-    loading: false
-  }
 
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
         this.setState({ loading: true })
-        this.props.onOk(values)
+        if (this.props.update) {
+          const comment = this.props.selectedComment
+          comment.body = values.body
+          this.props.onOk(comment)
+        } else {
+          this.props.onOk(values)
+        }
       }
     });
   }
 
   render() {
-    
     const { getFieldDecorator } = this.props.form;
+    const { update, selectedComment } = this.props
     return (
       <div>
         <Form onSubmit={this.handleSubmit}>
         <Modal
-          title="Create a new comment"
+          closable={false}
+          destroyOnClose={true}
+          title={update ? "Update this comment" : "Create a new comment" } 
           visible={this.props.visible}
           footer={[
             <Button key="cancel" onClick={this.props.onCancel}>{this.props.cancelText}</Button>,
             <Button key="submit" type="primary" 
-              loading={this.state.loading}
+              loading={this.props.loadingForm}
               onClick={this.handleSubmit}>
                 {this.props.okText}
             </Button>,
@@ -39,14 +44,16 @@ class BaseForm extends Component {
         >
           <FormItem>
           {getFieldDecorator('author', {
-            rules: [{ required: true, message: 'Please input your name!' }],
-          })(
-            <Input placeholder="Author" />
+            initialValue: (update && selectedComment) ? selectedComment.author : "",
+            rules: [{ required: true, message: 'Please input your name!' }]
+          }, )(
+            <Input placeholder="Author" disabled={update}/>
           )}
           </FormItem>
           <FormItem>
           {getFieldDecorator('body', {
-            rules: [{ required: true, message: 'Please input your text here!' }],
+            initialValue: (update && selectedComment) ? selectedComment.body : "",
+            rules: [{ required: true, message: 'Please input your text here!' }]
           })(
             <TextArea placeholder="Text" rows={6}/>
           )}
