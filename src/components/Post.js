@@ -1,6 +1,11 @@
 import React, { Component } from  'react'
 import { connect } from 'react-redux'
-import { fetchPost, fetchAllComentss, createComment, postVoteComment, putUpdateComment } from '../actions'
+import { fetchPost, 
+         fetchAllComentss,
+         createComment,
+         postVoteComment,
+         putUpdateComment,
+         deleteDeleteComment } from '../actions'
 import { Card, Icon, List, Button } from 'antd'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
@@ -89,7 +94,6 @@ class Post extends Component {
   }
 
   editComment = (comment) => {
-    console.log(`comment`,comment)
     this.setState({
       commentUpdateFormVisibility: true,
       selectedComment: comment
@@ -97,7 +101,9 @@ class Post extends Component {
   }
 
   deletComment = (commentId) => {
-    console.log(`deleteComment`, commentId)
+    this.props.sendDeleteComment(commentId)
+      .then(then => {})
+      .catch(error => console.log(error))
   }
 
   render() {
@@ -131,7 +137,7 @@ class Post extends Component {
         <br/>
         <List
           bordered
-          dataSource={Object.keys(comments).map(key => comments[key])}
+          dataSource={Object.keys(comments).map(key => comments[key]).filter(comment => comment.deleted === false)}
           renderItem= {
             comment => (<List.Item >
              <div>
@@ -200,7 +206,8 @@ function mapDispatchToProps(dispatch) {
     getComments: (postId) => dispatch(fetchAllComentss(postId)),
     postComment: (comment) => dispatch(createComment(comment)),
     sendCommentVote: (commentId, voteOption) => dispatch(postVoteComment(commentId, voteOption)),
-    sendCommentUpdate: (commentId, body) => dispatch(putUpdateComment(commentId, body))
+    sendCommentUpdate: (commentId, body) => dispatch(putUpdateComment(commentId, body)),
+    sendDeleteComment: (commentId) => dispatch(deleteDeleteComment(commentId))
   }
   
 }
