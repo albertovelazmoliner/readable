@@ -3,7 +3,7 @@ import * as api from './../utils/api'
 export const ADD_POST = 'ADD_POST'
 export const ADD_COMMENT = 'ADD_COMMENT'
 export const UPDATE_POST = 'UPDATE_POST'
-export const REQUEST_UPDATE_COMMENT = 'UPDATE_COMMENT'
+export const REQUEST_UPDATE_COMMENT = 'REQUEST_UPDATE_COMMENT'
 export const UPDATE_COMMENT = 'UPDATE_COMMENT'
 export const DELETE_POST = 'DELETE_POST'
 export const DELETE_COMMENT = 'DELETE_COMMENT'
@@ -17,6 +17,7 @@ export const RECEIVE_CATEGORIES = 'RECEIVE_CATEGORIES'
 export const REQUEST_ALL_COMMENTS = 'REQUEST_ALL_COMMENTS'
 export const RECEIVE_ALL_COMMENTS = 'RECEIVE_ALL_COMMENTS'
 export const REQUEST_COMMENT = 'REQUEST_COMMENT'
+export const REQUEST_DELETE_COMMENT = 'REQUEST_DELETE_COMMENT'
 
 export const addPost = (post) => ({
   type: ADD_POST,
@@ -37,9 +38,9 @@ export const requestUpdateComment = () => ({
   type: REQUEST_UPDATE_COMMENT
 })
 
-export const updateComment = (id, comment) => ({
+export const updateComment = (comment) => ({
   type: UPDATE_COMMENT,
-  id, comment
+  comment
 })
 
 export const deletePost = (id) => ({
@@ -47,9 +48,13 @@ export const deletePost = (id) => ({
   id
 })
 
-export const deleteComment = (id) => ({
-  type: DELETE_COMMENT,
-  id
+export const requestDeleteComment = () => ({
+  type: REQUEST_DELETE_COMMENT
+})
+
+export const deleteComment = (comment) => ({
+  type: UPDATE_COMMENT,
+  comment
 })
 
 export const votePost = (id, option) => ({
@@ -139,5 +144,12 @@ export const putUpdateComment = (commentId, body) => dispatch => {
   dispatch(requestUpdateComment())
   return api.updateComment(commentId, body)
     .then(comment => dispatch(updateComment(comment)))
+    .catch(error => console.log(error))
+}
+
+export const deleteDeleteComment = (commentId) => dispatch => {
+  dispatch(requestDeleteComment())
+  return api.deleteComment(commentId)
+    .then(comment => dispatch(deleteComment(comment)))
     .catch(error => console.log(error))
 }
