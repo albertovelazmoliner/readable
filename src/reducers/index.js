@@ -9,7 +9,8 @@ import {
   RECEIVE_POST,
   ADD_COMMENT,
   UPDATE_COMMENT,
-  REQUEST_UPDATE_COMMENT
+  REQUEST_UPDATE_COMMENT,
+  REQUEST_DELETE_COMMENT
 } from './../actions'
  
 const categories = (
@@ -40,6 +41,7 @@ const comments = (
   switch(action.type) {
     case REQUEST_ALL_COMMENTS:
     case REQUEST_UPDATE_COMMENT:
+    case REQUEST_DELETE_COMMENT:
       return {
         ...state,
         isLoading: true
@@ -63,7 +65,6 @@ const comments = (
         }
       }
     case UPDATE_COMMENT:
-    //TODO Review this after implementing DELETE COMMENT
       return {
         ...state,
         isLoading: false,
