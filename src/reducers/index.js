@@ -61,6 +61,7 @@ const comments = (
         }
       }
     case UPDATE_COMMENT:
+    //TODO Review this after implementing DELETE COMMENT
       return {
         ...state,
         isLoading: false,
