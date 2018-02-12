@@ -143,7 +143,7 @@ class Post extends Component {
              <div>
               <p>{comment.body}</p>
               <p>Votes: {comment.voteScore}</p>
-              <p>{moment(postData.timestamp).format('LLL')}</p>
+              <p>{moment(comment.timestamp).format('LLL')}</p>
               <p>
                 <Button shape="circle" icon="like" style={{margin:10}} 
                   onClick={() => this.handleVote(comment.id)}/> 
