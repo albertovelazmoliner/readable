@@ -8,7 +8,8 @@ import {
   RECEIVE_ALL_COMMENTS,
   RECEIVE_POST,
   ADD_COMMENT,
-  UPDATE_COMMENT
+  UPDATE_COMMENT,
+  REQUEST_UPDATE_COMMENT
 } from './../actions'
  
 const categories = (
@@ -38,6 +39,7 @@ const comments = (
 ) => {
   switch(action.type) {
     case REQUEST_ALL_COMMENTS:
+    case REQUEST_UPDATE_COMMENT:
       return {
         ...state,
         isLoading: true
