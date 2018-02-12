@@ -6,12 +6,13 @@ import { fetchPost,
          postVoteComment,
          putUpdateComment,
          deleteDeleteComment } from '../actions'
-import { Card, Icon, List, Button } from 'antd'
+import { Card, Icon, Button } from 'antd'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
 import './Post.css'
 import CommentForm from './CommentForm'
 import uuid from 'uuid/v1'
+import CommentsList from './CommentsList'
 
 class Post extends Component {
 
@@ -131,33 +132,12 @@ class Post extends Component {
           <p>{moment(postData.timestamp).format('LLL')}</p>
         </Card>
         <br/>
-        <div className="flex-container">
-        <h3>Comments:</h3>
-        </div>
-        <br/>
-        <List
-          bordered
-          dataSource={Object.keys(comments).map(key => comments[key]).filter(comment => comment.deleted === false)}
-          renderItem= {
-            comment => (<List.Item >
-             <div>
-              <p>{comment.body}</p>
-              <p>Votes: {comment.voteScore}</p>
-              <p>{moment(comment.timestamp).format('LLL')}</p>
-              <p>
-                <Button shape="circle" icon="like" style={{margin:10}} 
-                  onClick={() => this.handleVote(comment.id)}/> 
-                <Button shape="circle" icon="dislike" style={{margin:10}}
-                  onClick={() => this.handleVote(comment.id, 'downVote')}/>
-                <Button shape="circle" icon="edit" style={{margin:10}}
-                  onClick={() => this.editComment(comment)}/>
-                <Button shape="circle" icon="delete" style={{margin:10}}
-                  onClick={() => this.deletComment(comment.id)}/>
-              </p>
-            </div>
-              </List.Item>)
-          }
-          style={{ width:"50%", margin:"auto"}}
+        <CommentsList
+          comments={Object.keys(comments).map(key => comments[key]).filter(comment => comment.deleted === false)}
+          voteHandlerUp={comment => this.handleVote(comment.id)}
+          voteHandlerDown={comment => this.handleVote(comment.id, "downVote")}
+          editHandler={comment => this.editComment(comment)}
+          deleteHandler={comment => this.deletComment(comment.id)}
         />
         <Link to="/addPost">
           <Button className="new-post" type="primary" icon="plus" size="large">
