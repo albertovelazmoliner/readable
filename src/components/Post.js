@@ -133,7 +133,10 @@ class Post extends Component {
         </Card>
         <br/>
         <CommentsList
-          comments={Object.keys(comments).map(key => comments[key]).filter(comment => comment.deleted === false)}
+          comments={
+            Object.keys(comments).map(key => comments[key])
+            .filter(comment => comment.deleted === false)
+          }
           voteHandlerUp={comment => this.handleVote(comment.id)}
           voteHandlerDown={comment => this.handleVote(comment.id, "downVote")}
           editHandler={comment => this.editComment(comment)}
