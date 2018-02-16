@@ -15,6 +15,7 @@ const CommentsList = (props) => {
           renderItem= {
             comment => (<List.Item >
              <div>
+              <p><strong>Author:</strong> {comment.author}</p>
               <p>{comment.body}</p>
               <p>Votes: {comment.voteScore}</p>
               <p>{moment(comment.timestamp).format('LLL')}</p>
