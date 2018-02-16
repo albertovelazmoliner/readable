@@ -5,6 +5,9 @@ const { TextArea } = Input;
 const FormItem = Form.Item
 
 class BaseForm extends Component {
+  state = {
+    loading: false
+  }
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -33,10 +36,11 @@ class BaseForm extends Component {
           destroyOnClose={true}
           title={update ? "Update this comment" : "Create a new comment" } 
           visible={this.props.visible}
+          afterClose={() => this.setState({ loading: false })}
           footer={[
             <Button key="cancel" onClick={this.props.onCancel}>{this.props.cancelText}</Button>,
             <Button key="submit" type="primary" 
-              loading={this.props.loadingForm}
+              loading={this.state.loading}
               onClick={this.handleSubmit}>
                 {this.props.okText}
             </Button>,
