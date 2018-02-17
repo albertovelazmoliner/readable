@@ -65,7 +65,7 @@ class MainView extends Component {
           </Content>
           <Footer>
             {/* <Button type="primary" icon="plus" size="large"> */}
-            <Link to="/addPost">Create a new Post</Link>
+            <Link to="/PostForm">Create a new Post</Link>
             {/* </Button> */}
           </Footer>
         </Layout>
