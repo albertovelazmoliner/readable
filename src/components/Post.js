@@ -142,7 +142,7 @@ class Post extends Component {
           editHandler={comment => this.editComment(comment)}
           deleteHandler={comment => this.deletComment(comment.id)}
         />
-        <Link to="/addPost">
+        <Link to='/PostForm'>
           <Button className="new-post" type="primary" icon="plus" size="large">
             Add a new post
           </Button>
