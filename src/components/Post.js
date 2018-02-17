@@ -121,7 +121,7 @@ class Post extends Component {
       <div style={{padding:20}}>
         <Card title={postData.title} style={{ width:"50%", margin:"auto"}}
           actions={[
-            <Icon type="edit" />, 
+            <Link to={'/PostForm/' + postData.id}><Icon type="edit" /></Link>, 
             <Icon type="delete"/>, 
             <Icon type="like"/>, 
             <Icon type="dislike"/>
