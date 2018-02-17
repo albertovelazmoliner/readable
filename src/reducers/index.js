@@ -10,7 +10,9 @@ import {
   ADD_COMMENT,
   UPDATE_COMMENT,
   REQUEST_UPDATE_COMMENT,
-  REQUEST_DELETE_COMMENT
+  REQUEST_DELETE_COMMENT,
+  REQUEST_UPDATE_POST,
+  UPDATE_POST
 } from './../actions'
  
 const categories = (
@@ -88,6 +90,7 @@ const posts = (
 ) => {
   switch (action.type) {
     case REQUEST_ALL_POSTS:
+    case REQUEST_UPDATE_POST:
       return {
         ...state,
         isLoading: true
@@ -107,7 +110,15 @@ const posts = (
         isLoading: false,
         currentPost: action.post
       }
-
+    case UPDATE_POST:
+      return {
+        ...state,
+        isLoading: false,
+        posts: {
+          ...state.posts,
+          [action.post.id]: action.post
+        }
+      }
     default:
       return state
   }
