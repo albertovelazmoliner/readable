@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Button, Form, Input, Select } from 'antd'
 import './PostForm.css'
-import { fetchCategories } from '../actions'
+import { fetchCategories, fetchPost } from '../actions'
 
 const { TextArea } = Input;
 const FormItem = Form.Item
@@ -18,7 +18,7 @@ class PostFormBase extends Component {
   componentDidMount() {
     const postId = this.props.match.params.id
     if (!this.posts) {
-      //this.props.getPost(postId)
+      this.props.getPost(postId)
     } else {
       this.props.post = this.posts2[postId]
     }
@@ -121,7 +121,8 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    getCategories: () => dispatch(fetchCategories())
+    getCategories: () => dispatch(fetchCategories()),
+    getPost: (postId) => dispatch(fetchPost(postId))
   }
 }
 
