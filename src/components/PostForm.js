@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Button, Form, Input, Select } from 'antd'
 import './PostForm.css'
-import { fetchCategories, fetchPost } from '../actions'
+import { fetchCategories, fetchPost, putUpdatePost } from '../actions'
 
 const { TextArea } = Input;
 const FormItem = Form.Item
@@ -31,14 +31,18 @@ class PostFormBase extends Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       console.log('Received values of form: ', values)
-      // if (!err) {
-      //   this.setState({ loading: true })
-      //   if (this.props.update) {
+      const { post } = this.props
+      if (!err) {
+        this.setState({ loading: true })
+        if (this.props.post == null ) {
           
-      //   } else {
-          
-      //   }
-      // }
+        } else {
+          this.props.updatePost(post.id, values.title, values.body)
+          .then(() => {
+            this.setState({ loading: false })
+          })
+        }
+      }
     });
   }
 
@@ -122,7 +126,8 @@ function mapStateToProps (state) {
 function mapDispatchToProps (dispatch) {
   return {
     getCategories: () => dispatch(fetchCategories()),
-    getPost: (postId) => dispatch(fetchPost(postId))
+    getPost: (postId) => dispatch(fetchPost(postId)),
+    updatePost: (postId, title, body) => dispatch(putUpdatePost(postId, title, body))
   }
 }
 
