@@ -2,6 +2,7 @@ import * as api from './../utils/api'
 
 export const ADD_POST = 'ADD_POST'
 export const ADD_COMMENT = 'ADD_COMMENT'
+export const REQUEST_UPDATE_POST = 'REQUEST_UPDATE_POST'
 export const UPDATE_POST = 'UPDATE_POST'
 export const REQUEST_UPDATE_COMMENT = 'REQUEST_UPDATE_COMMENT'
 export const UPDATE_COMMENT = 'UPDATE_COMMENT'
@@ -29,9 +30,13 @@ export const addComment = (comment) => ({
   comment
 })
 
-export const updatePost = (id, post ) => ({
+export const requestUpdatePost = () => ({
+  type: REQUEST_UPDATE_POST,
+})
+
+export const updatePost = (post) => ({
   type: UPDATE_POST,
-  id, post
+  post
 })
 
 export const requestUpdateComment = () => ({
@@ -151,5 +156,12 @@ export const deleteDeleteComment = (commentId) => dispatch => {
   dispatch(requestDeleteComment())
   return api.deleteComment(commentId)
     .then(comment => dispatch(deleteComment(comment)))
+    .catch(error => console.log(error))
+}
+
+export const putUpdatePost = (postId, body) => dispatch => {
+  dispatch(requestUpdatePost())
+  return api.updatePost(postId, body)
+    .then(post => dispatch(updatePost(post)))
     .catch(error => console.log(error))
 }
