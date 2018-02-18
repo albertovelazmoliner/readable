@@ -21,6 +21,7 @@ export const RECEIVE_ALL_COMMENTS = 'RECEIVE_ALL_COMMENTS'
 export const REQUEST_COMMENT = 'REQUEST_COMMENT'
 export const REQUEST_DELETE_COMMENT = 'REQUEST_DELETE_COMMENT'
 export const REQUEST_DELETE_POST = 'REQUEST_DELETE_POST'
+export const REQUEST_CHANGE_POST_ORDER = 'REQUEST_CHANGE_POST_ORDER'
 
 export const addPost = (post) => ({
   type: ADD_POST,
@@ -112,6 +113,11 @@ export const removeSelectedPost = () => ({
 export const receiveCategories = categories => ({
   type: RECEIVE_CATEGORIES,
   categories
+})
+
+export const requestChangePostOrder = order => ({
+  type: REQUEST_CHANGE_POST_ORDER,
+  order
 })
 
 export const fetchCategories = () => dispatch => (
