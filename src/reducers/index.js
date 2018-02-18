@@ -16,6 +16,8 @@ import {
   VOTE_POST,
   REMOVE_SELECTED_POST,
   ADD_POST,
+  REQUEST_DELETE_POST,
+  DELETE_POST
 } from './../actions'
  
 const categories = (
@@ -94,6 +96,7 @@ const posts = (
   switch (action.type) {
     case REQUEST_ALL_POSTS:
     case REQUEST_UPDATE_POST:
+    case REQUEST_DELETE_POST:
       return {
         ...state,
         isLoading: true
@@ -121,6 +124,16 @@ const posts = (
           ...state.posts,
           [action.post.id]: action.post
         }
+      }
+    case DELETE_POST:
+      return {
+        ...state,
+        isLoading: false,
+        posts: {
+          ...state.posts,
+          [action.post.id]: action.post
+        },
+        currentPost: null
       }
     case VOTE_POST:
       return {
