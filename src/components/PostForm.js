@@ -40,6 +40,7 @@ class PostFormBase extends Component {
           this.props.updatePost(post.id, values.title, values.body)
           .then(() => {
             this.setState({ loading: false })
+            window.location.replace("/Post/" + post.id)
           })
         }
       }
