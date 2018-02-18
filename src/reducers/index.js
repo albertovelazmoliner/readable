@@ -17,9 +17,14 @@ import {
   REMOVE_SELECTED_POST,
   ADD_POST,
   REQUEST_DELETE_POST,
-  DELETE_POST
+  DELETE_POST,
+  REQUEST_CHANGE_POST_ORDER
 } from './../actions'
- 
+
+import {
+  ORDER_BY_DATE
+} from './../components/MainView'
+
 const categories = (
   state = {
     categories: []
@@ -89,7 +94,8 @@ const posts = (
   state = {
     isLoading: false,
     currentPost: null,
-    posts:{}
+    posts:{},
+    postOrder: ORDER_BY_DATE
   },
   action
 ) => {
@@ -157,6 +163,11 @@ const posts = (
       return {
         ...state,
         currentPost: null
+      }
+    case REQUEST_CHANGE_POST_ORDER:
+      return {
+        ...state,
+        postOrder: action.order
       }
     default:
       return state
