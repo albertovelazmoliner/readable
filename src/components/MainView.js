@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import './MainView.css'
-import { Affix, Select, Icon, Row, Col, List, Button, Layout, Card } from 'antd'
+import { Select, Icon, Row, Col, List, Button, Layout } from 'antd'
 import moment from 'moment'
 import 'antd/dist/antd.css' 
 import { connect } from 'react-redux'
 import { fetchCategories, fetchAllPosts, postVotePost } from '../actions'
 
-const { Header, Footer, Content } = Layout;
+const {Content } = Layout;
 
 class MainView extends Component {
   
@@ -34,14 +34,34 @@ class MainView extends Component {
     }
 
     return (
-      <div>
+      <div className="container-mainview">
         <Layout>
-          <Content>
+          <Content style={{ marginTop:"20px", marginBottom:"100px"}}>
+          <Row>
+            <Col span={1}/>
+            <Col span={2}>
+            <Link to="/PostForm">
+              <Button type="primary" icon="plus" size="large">
+                Create a new Post
+              </Button>
+            </Link>
+            </Col>
+            <Col span={20}>
+              <Select defaultValue="timestamp" 
+                style={{ width: 220, margin:"16px 0px 16px 0px", float:"right" }} 
+                onChange={handleChange}>
+                <Option value="vote">Posts order by vote score</Option>
+                <Option value="timestamp">Posts order by date</Option>
+                <Option value="title">Posts order by title</Option>
+              </Select>
+            </Col>
+            <Col span={1}/>
+          </Row>
           <Row>
               <Col span={1}/>
               <Col span={10}>
-                <h3 style={{ margin: '16px 0' }}>Categories</h3>
                 <List
+                  header={<h3 >Categories</h3>}
                   className="list-item"
                   bordered
                   dataSource={this.props.categories}
@@ -54,15 +74,10 @@ class MainView extends Component {
               </Col>
               <Col span={1}/>
               <Col span={1}/>
-              <Col span={10}>
-              <Select defaultValue="timestamp" style={{ width: 120 }} onChange={handleChange}>
-                <Option value="vote">By vote score</Option>
-                <Option value="timestamp">By date</Option>
-                <Option value="title">By title</Option>
-              </Select>
-                <h3 style={{ margin: '16px 0' }}>Posts</h3>
+              <Col span={10}>   
                 <List
-                  className="categories-list"
+                  header={<h3 >Posts</h3>}
+                  className="list-item"
                   bordered
                   itemLayout="vertical"
                   dataSource={Object.keys(this.props.posts).map(key => this.props.posts[key])}
@@ -94,17 +109,7 @@ class MainView extends Component {
               <Col span={1}/>
             </Row>
           </Content>
-          <Footer>
-            <Link to="/PostForm">
-              <Button type="primary" icon="plus" size="large">
-                Create a new Post
-              </Button>
-            </Link>
-          </Footer>
         </Layout>
-        <div>
-        
-        </div>
       </div>
     );
   }
