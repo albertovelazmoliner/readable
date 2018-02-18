@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { fetchPost,
          removeSelectedPost,
          postVotePost,
+         deleteDeletePost,
          fetchAllComentss,
          createComment,
          postVoteComment,
@@ -106,6 +107,13 @@ class Post extends Component {
       .catch(error => console.log(error))
   }
 
+  handleDeletePost = (postId) => {
+    this.props.deletePost(postId)
+      .then(() => {
+        window.location.replace('/')
+      }).catch(error => console.log(error))
+  }
+
   editComment = (comment) => {
     this.setState({
       commentUpdateFormVisibility: true,
@@ -134,7 +142,7 @@ class Post extends Component {
         <Card title={postData.title} style={{ width:"50%", margin:"auto"}}
           actions={[
             <Link to={'/PostForm/' + postData.id}><Icon type="edit" /></Link>, 
-            <Icon type="delete" />, 
+            <Icon type="delete" onClick={() => this.handleDeletePost(postData.id)}/>, 
             <Icon type="like" onClick={() => this.handlePostVote(postData.id)}/>, 
             <Icon type="dislike" onClick={() => this.handlePostVote(postData.id, "downVote")}/>
           ]}>
@@ -201,6 +209,7 @@ function mapDispatchToProps(dispatch) {
     cleanPost: () => dispatch(removeSelectedPost()),
     getComments: (postId) => dispatch(fetchAllComentss(postId)),
     postComment: (comment) => dispatch(createComment(comment)),
+    deletePost: (postId) => dispatch(deleteDeletePost(postId)),
     sendPostVote: (postId, voteOption) => dispatch(postVotePost(postId, voteOption)),
     sendCommentVote: (commentId, voteOption) => dispatch(postVoteComment(commentId, voteOption)),
     sendCommentUpdate: (commentId, body) => dispatch(putUpdateComment(commentId, body)),
