@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Button, Form, Input, Select } from 'antd'
 import './PostForm.css'
-import { fetchCategories, fetchPost, putUpdatePost, removeSelectedPost } from '../actions'
+import uuid from 'uuid/v1'
+import { fetchCategories, fetchPost, putUpdatePost, removeSelectedPost, createPost } from '../actions'
 
 const { TextArea } = Input;
 const FormItem = Form.Item
@@ -40,7 +41,12 @@ class PostFormBase extends Component {
       if (!err) {
         this.setState({ loading: true })
         if (this.props.post == null ) {
-          
+          const newPost = this.generateDataPost(values)
+          this.props.postPost(newPost)
+          .then(() => {
+            this.setState({ loading: false })
+            window.location.replace("/")
+          })
         } else {
           this.props.updatePost(post.id, values.title, values.body)
           .then(() => {
@@ -50,6 +56,17 @@ class PostFormBase extends Component {
         }
       }
     });
+  }
+
+  generateDataPost = (values) => {
+    const newPost = {}
+    newPost.title = values.title
+    newPost.author = values.author
+    newPost.body = values.body
+    newPost.category = values.category
+    newPost.id = uuid()
+    newPost.timestamp = Date.now()
+    return newPost
   }
 
   handleCategoryChange = (category) => (
@@ -133,7 +150,8 @@ function mapDispatchToProps (dispatch) {
     getCategories: () => dispatch(fetchCategories()),
     getPost: (postId) => dispatch(fetchPost(postId)),
     updatePost: (postId, title, body) => dispatch(putUpdatePost(postId, title, body)),
-    cleanPost: () => dispatch(removeSelectedPost())
+    cleanPost: () => dispatch(removeSelectedPost()),
+    postPost: (post) => dispatch(createPost(post))
   }
 }
 
