@@ -170,3 +170,9 @@ export const putUpdatePost = (postId, title, body) => dispatch => {
     .then(post => dispatch(updatePost(post)))
     .catch(error => console.log(error))
 }
+
+export const createPost = (post) => dispatch => {
+  return api.postPost(post)
+    .then(post => dispatch(addPost(post)))
+    .catch(error => console.log(`Error`, error))
+}
