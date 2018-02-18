@@ -1,6 +1,7 @@
 import React, { Component } from  'react'
 import { connect } from 'react-redux'
-import { fetchPost, 
+import { fetchPost,
+         removeSelectedPost,
          fetchAllComentss,
          createComment,
          postVoteComment,
@@ -31,6 +32,10 @@ class Post extends Component {
       this.props.post = this.posts2[postId]
     }
     this.props.getComments(postId)
+  }
+
+  componentWillUnmount() {
+    this.props.cleanPost()
   }
 
   showAddModal = () => {
@@ -186,11 +191,12 @@ function mapStateToProps (state) {
 function mapDispatchToProps(dispatch) {
   return {
     getPost: (postId) => dispatch(fetchPost(postId)),
+    cleanPost: () => dispatch(removeSelectedPost()),
     getComments: (postId) => dispatch(fetchAllComentss(postId)),
     postComment: (comment) => dispatch(createComment(comment)),
     sendCommentVote: (commentId, voteOption) => dispatch(postVoteComment(commentId, voteOption)),
     sendCommentUpdate: (commentId, body) => dispatch(putUpdateComment(commentId, body)),
-    sendDeleteComment: (commentId) => dispatch(deleteDeleteComment(commentId))
+    sendDeleteComment: (commentId) => dispatch(deleteDeleteComment(commentId)),
   }
   
 }
