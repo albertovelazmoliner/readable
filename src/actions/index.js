@@ -4,6 +4,7 @@ export const ADD_POST = 'ADD_POST'
 export const ADD_COMMENT = 'ADD_COMMENT'
 export const REQUEST_UPDATE_POST = 'REQUEST_UPDATE_POST'
 export const UPDATE_POST = 'UPDATE_POST'
+export const REMOVE_SELECTED_POST = 'REMOVE_SELECTED_POST'
 export const REQUEST_UPDATE_COMMENT = 'REQUEST_UPDATE_COMMENT'
 export const UPDATE_COMMENT = 'UPDATE_COMMENT'
 export const DELETE_POST = 'DELETE_POST'
@@ -97,6 +98,10 @@ export const requestPost = () => ({
 export const receivePost = (post) => ({
   type: RECEIVE_POST,
   post
+})
+
+export const removeSelectedPost = () => ({
+  type: REMOVE_SELECTED_POST
 })
 
 export const receiveCategories = categories => ({
