@@ -9,9 +9,9 @@
 }
 
 .save-post {
-  position: fixed;
-  bottom:40px;
-  right:40px;
+  position: fixed !important;
+  bottom:40px !important;
+  right:40px !important;
   width: 120px;
   text-align: start;
 }
