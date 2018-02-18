@@ -5,9 +5,13 @@ import { Select, Icon, Row, Col, List, Button, Layout } from 'antd'
 import moment from 'moment'
 import 'antd/dist/antd.css' 
 import { connect } from 'react-redux'
-import { fetchCategories, fetchAllPosts, postVotePost } from '../actions'
+import { fetchCategories, fetchAllPosts, postVotePost, requestChangePostOrder } from '../actions'
 
 const {Content } = Layout;
+
+export const ORDER_BY_DATE = 'date'
+export const ORDER_BY_VOTE = 'vote'
+export const ORDER_BY_TITLE = 'title'
 
 class MainView extends Component {
   
@@ -24,14 +28,30 @@ class MainView extends Component {
       .catch(error => console.log(error))
   }
 
+  orderBy = (a, b) => {
+    switch(this.props.order) {
+      case ORDER_BY_DATE:
+        var dateA = new Date(a.timestamp), dateB = new Date(b.timestamp);
+        return dateB - dateA;
+      case ORDER_BY_VOTE:
+        return b.voteScore - a.voteScore;
+      case ORDER_BY_TITLE:
+        var titleA = a.title.toLowerCase(), titleB = b.title.toLowerCase();
+        if (titleA < titleB) return -1;
+        if (titleA > titleB) return 1;
+        return 0; 
+      default:
+        return true
+    }
+  }
 
+  handleChange = (value) => {
+    console.log(value)
+    this.props.changePostOrder(value)
+  }
 
   render() {
     const Option = Select.Option
-
-    function handleChange(value) {
-      console.log(`selected ${value}`);
-    }
 
     return (
       <div className="container-mainview">
@@ -47,12 +67,12 @@ class MainView extends Component {
             </Link>
             </Col>
             <Col span={20}>
-              <Select defaultValue="timestamp" 
+              <Select defaultValue={this.props.order}
                 style={{ width: 220, margin:"16px 0px 16px 0px", float:"right" }} 
-                onChange={handleChange}>
-                <Option value="vote">Posts order by vote score</Option>
-                <Option value="timestamp">Posts order by date</Option>
-                <Option value="title">Posts order by title</Option>
+                onChange={this.handleChange}>
+                <Option value={ORDER_BY_VOTE}>Posts order by vote score</Option>
+                <Option value={ORDER_BY_DATE}>Posts order by date</Option>
+                <Option value={ORDER_BY_TITLE}>Posts order by title</Option>
               </Select>
             </Col>
             <Col span={1}/>
@@ -80,7 +100,8 @@ class MainView extends Component {
                   className="list-item"
                   bordered
                   itemLayout="vertical"
-                  dataSource={Object.keys(this.props.posts).map(key => this.props.posts[key])}
+                  dataSource={Object.keys(this.props.posts)
+                    .map(key => this.props.posts[key]).sort(this.orderBy)}
                   renderItem= {
                     post => (
                       <List.Item key={post.id}
@@ -119,6 +140,7 @@ function mapStateToProps (state) {
   return {
     categories: state.categories.categories,
     posts: state.posts.posts,
+    order: state.posts.postOrder
   }
 }
 
@@ -127,6 +149,7 @@ function mapDispatchToProps (dispatch) {
     getCategories: () => dispatch(fetchCategories()),
     getAllPosts: () => dispatch(fetchAllPosts()),
     sendPostVote: (postId, voteOption) => dispatch(postVotePost(postId, voteOption)),
+    changePostOrder: (order) => dispatch(requestChangePostOrder(order))
   }
 }
 
