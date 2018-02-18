@@ -13,7 +13,8 @@ import {
   REQUEST_DELETE_COMMENT,
   REQUEST_UPDATE_POST,
   UPDATE_POST,
-  REMOVE_SELECTED_POST
+  REMOVE_SELECTED_POST,
+  ADD_POST
 } from './../actions'
  
 const categories = (
@@ -120,6 +121,15 @@ const posts = (
           [action.post.id]: action.post
         }
       }
+    case ADD_POST:
+     return {
+       ...state,
+       posts: {
+         ...state.posts,
+         [action.post.id]: action.post
+       },
+      isLoading: false
+     }
     case REMOVE_SELECTED_POST:
       return {
         ...state,
