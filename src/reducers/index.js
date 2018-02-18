@@ -12,7 +12,8 @@ import {
   REQUEST_UPDATE_COMMENT,
   REQUEST_DELETE_COMMENT,
   REQUEST_UPDATE_POST,
-  UPDATE_POST
+  UPDATE_POST,
+  REMOVE_SELECTED_POST
 } from './../actions'
  
 const categories = (
@@ -83,7 +84,7 @@ const comments = (
 const posts = (
   state = {
     isLoading: false,
-    currentPost:null,
+    currentPost: null,
     posts:{}
   },
   action
@@ -118,6 +119,11 @@ const posts = (
           ...state.posts,
           [action.post.id]: action.post
         }
+      }
+    case REMOVE_SELECTED_POST:
+      return {
+        ...state,
+        currentPost: null
       }
     default:
       return state
