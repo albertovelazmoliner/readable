@@ -45,13 +45,13 @@ class PostFormBase extends Component {
           this.props.postPost(newPost)
           .then(() => {
             this.setState({ loading: false })
-            window.location.replace("/")
+            window.location.replace('/')
           })
         } else {
           this.props.updatePost(post.id, values.title, values.body)
           .then(() => {
             this.setState({ loading: false })
-            window.location.replace("/Post/" + post.id)
+            window.location.replace('/Post/' + post.id)
           })
         }
       }
