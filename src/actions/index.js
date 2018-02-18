@@ -20,6 +20,7 @@ export const REQUEST_ALL_COMMENTS = 'REQUEST_ALL_COMMENTS'
 export const RECEIVE_ALL_COMMENTS = 'RECEIVE_ALL_COMMENTS'
 export const REQUEST_COMMENT = 'REQUEST_COMMENT'
 export const REQUEST_DELETE_COMMENT = 'REQUEST_DELETE_COMMENT'
+export const REQUEST_DELETE_POST = 'REQUEST_DELETE_POST'
 
 export const addPost = (post) => ({
   type: ADD_POST,
@@ -49,9 +50,13 @@ export const updateComment = (comment) => ({
   comment
 })
 
-export const deletePost = (id) => ({
+export const requestDeletePost = () => ({
+  type: REQUEST_DELETE_POST
+})
+
+export const deletePost = (post) => ({
   type: DELETE_POST,
-  id
+  post
 })
 
 export const requestDeleteComment = () => ({
@@ -180,5 +185,12 @@ export const createPost = (post) => dispatch => {
 export const postVotePost = (postId, voteOption) => dispatch => {
   return api.votePost(postId, voteOption)
     .then(post => dispatch(votePost(post)))
+    .catch(error => console.log(error))
+}
+
+export const deleteDeletePost = (postId) => dispatch => {
+  dispatch(requestDeletePost())
+  return api.deletePost(postId)
+    .then(post => dispatch(deletePost(post)))
     .catch(error => console.log(error))
 }
