@@ -2,6 +2,7 @@ import React, { Component } from  'react'
 import { connect } from 'react-redux'
 import { fetchPost,
          removeSelectedPost,
+         postVotePost,
          fetchAllComentss,
          createComment,
          postVoteComment,
@@ -93,8 +94,14 @@ class Post extends Component {
     return comment
   }
 
-  handleVote = (commentId, option = 'upVote') => {
+  handleCommentVote = (commentId, option = 'upVote') => {
     this.props.sendCommentVote(commentId, option)
+      .then(() => {})
+      .catch(error => console.log(error))
+  }
+
+  handlePostVote = (postId, option = 'upVote') => {
+    this.props.sendPostVote(postId, option)
       .then(() => {})
       .catch(error => console.log(error))
   }
@@ -127,9 +134,9 @@ class Post extends Component {
         <Card title={postData.title} style={{ width:"50%", margin:"auto"}}
           actions={[
             <Link to={'/PostForm/' + postData.id}><Icon type="edit" /></Link>, 
-            <Icon type="delete"/>, 
-            <Icon type="like"/>, 
-            <Icon type="dislike"/>
+            <Icon type="delete" />, 
+            <Icon type="like" onClick={() => this.handlePostVote(postData.id)}/>, 
+            <Icon type="dislike" onClick={() => this.handlePostVote(postData.id, "downVote")}/>
           ]}>
           <h2><p>Author: {postData.author}</p></h2>
           <h3><p>{postData.body}</p></h3>
@@ -142,8 +149,8 @@ class Post extends Component {
             Object.keys(comments).map(key => comments[key])
             .filter(comment => comment.deleted === false)
           }
-          voteHandlerUp={comment => this.handleVote(comment.id)}
-          voteHandlerDown={comment => this.handleVote(comment.id, "downVote")}
+          voteHandlerUp={comment => this.handleCommentVote(comment.id)}
+          voteHandlerDown={comment => this.handleCommentVote(comment.id, "downVote")}
           editHandler={comment => this.editComment(comment)}
           deleteHandler={comment => this.deletComment(comment.id)}
         />
@@ -194,6 +201,7 @@ function mapDispatchToProps(dispatch) {
     cleanPost: () => dispatch(removeSelectedPost()),
     getComments: (postId) => dispatch(fetchAllComentss(postId)),
     postComment: (comment) => dispatch(createComment(comment)),
+    sendPostVote: (postId, voteOption) => dispatch(postVotePost(postId, voteOption)),
     sendCommentVote: (commentId, voteOption) => dispatch(postVoteComment(commentId, voteOption)),
     sendCommentUpdate: (commentId, body) => dispatch(putUpdateComment(commentId, body)),
     sendDeleteComment: (commentId) => dispatch(deleteDeleteComment(commentId)),
