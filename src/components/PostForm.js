@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Button, Form, Input, Select } from 'antd'
 import './PostForm.css'
-import { fetchCategories, fetchPost, putUpdatePost } from '../actions'
+import { fetchCategories, fetchPost, putUpdatePost, removeSelectedPost } from '../actions'
 
 const { TextArea } = Input;
 const FormItem = Form.Item
@@ -17,20 +17,25 @@ class PostFormBase extends Component {
 
   componentDidMount() {
     const postId = this.props.match.params.id
-    if (!this.posts) {
-      this.props.getPost(postId)
-    } else {
-      this.props.post = this.posts2[postId]
+    if (postId) {
+      if (!this.posts) {
+        this.props.getPost(postId)
+      } else {
+        this.props.post = this.posts2[postId]
+      }
     }
     if (this.props.categories.length === 0) {
       this.props.getCategories()  
     }
   }
 
+  componentWillUnmount() {
+    this.props.cleanPost()
+  }
+
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
-      console.log('Received values of form: ', values)
       const { post } = this.props
       if (!err) {
         this.setState({ loading: true })
@@ -116,7 +121,6 @@ class PostFormBase extends Component {
 }
 
 function mapStateToProps (state) {
-  console.log(state)
   return {
     posts: state.posts.posts,
     post: state.posts.currentPost,
@@ -128,7 +132,8 @@ function mapDispatchToProps (dispatch) {
   return {
     getCategories: () => dispatch(fetchCategories()),
     getPost: (postId) => dispatch(fetchPost(postId)),
-    updatePost: (postId, title, body) => dispatch(putUpdatePost(postId, title, body))
+    updatePost: (postId, title, body) => dispatch(putUpdatePost(postId, title, body)),
+    cleanPost: () => dispatch(removeSelectedPost())
   }
 }
 
