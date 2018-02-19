@@ -9,7 +9,7 @@ import { fetchPost,
          postVoteComment,
          putUpdateComment,
          deleteDeleteComment } from '../actions'
-import { Card, Icon, Button, Popconfirm } from 'antd'
+import { Card, Icon, Button, Popconfirm, Spin } from 'antd'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
 import './Post.css'
@@ -134,7 +134,7 @@ class Post extends Component {
     if (!this.props.post) {
       return (
         <div> 
-          <h1>LOADING</h1>
+          <Spin size="large" />
         </div>)
     }
     return (
