@@ -9,7 +9,7 @@ import { fetchPost,
          postVoteComment,
          putUpdateComment,
          deleteDeleteComment } from '../actions'
-import { Card, Icon, Button } from 'antd'
+import { Card, Icon, Button, Popconfirm } from 'antd'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
 import './Post.css'
@@ -142,7 +142,16 @@ class Post extends Component {
         <Card title={postData.title} style={{ width:"50%", margin:"auto"}}
           actions={[
             <Link to={'/PostForm/' + postData.id}><Icon type="edit" /></Link>, 
-            <Icon type="delete" onClick={() => this.handleDeletePost(postData.id)}/>, 
+            <Popconfirm title="Are you sure delete this task?" 
+              onConfirm={() => this.handleDeletePost(postData.id)} 
+              onCancel={() => {}} 
+              okText="Yes" 
+              cancelText="No">
+                {/* <a href="#">Delete</a> */}
+                {/* <Icon type="delete" onClick={() => this.handleDeletePost(postData.id)}/> */}
+                <Icon type="delete" /> 
+            </Popconfirm>
+            , 
             <Icon type="like" onClick={() => this.handlePostVote(postData.id)}/>, 
             <Icon type="dislike" onClick={() => this.handlePostVote(postData.id, "downVote")}/>
           ]}>
