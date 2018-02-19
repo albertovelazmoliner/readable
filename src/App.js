@@ -12,6 +12,7 @@ class ReadableApp extends React.Component {
         <Route exact path="/PostForm/:id" component={PostForm} />
         <Route exact path="/PostForm" component={PostForm} />
         <Route exact path="/" component={MainView} />
+        <Route exact path="/:category" component={MainView} />
         <Route exact path="/category/:id" component={CategoryPosts} />
         <Route exact path="/post/:id" component={Post} />
       </div>
