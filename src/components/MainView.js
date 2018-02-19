@@ -16,9 +16,11 @@ export const ORDER_BY_TITLE = 'title'
 class MainView extends Component {
   
   componentDidMount() {
-    if (this.props.categories.length === 0) {
-      this.props.getCategories()
-    }
+    const category = this.props.match.params.category
+    console.log(`Category`, category)    
+      if (this.props.categories.length === 0) {
+        this.props.getCategories()
+      }
     this.props.getAllPosts()
   }
 
@@ -52,7 +54,7 @@ class MainView extends Component {
 
   render() {
     const Option = Select.Option
-
+    const category = this.props.match.params.category
     return (
       <div className="container-mainview">
         <Layout>
@@ -80,17 +82,28 @@ class MainView extends Component {
           <Row>
               <Col span={1}/>
               <Col span={10}>
+                {(category === undefined) &&
                 <List
                   header={<h3 >Categories</h3>}
                   className="list-item"
                   bordered
                   dataSource={this.props.categories}
                   renderItem= {
-                    item => (<List.Item >
-                      <Link to={'/category/' + item.path}><div>{item.name}</div></Link>
+                    category => (<List.Item >
+                        <Link to={'/' + category.path}>
+                        <div>{category.name}</div>
+                        </Link>
                       </List.Item>)
                   }
-                />
+                />}
+                {(category !== undefined) &&
+                <div>
+                  <Link to="/">
+                    <Button type="primary" icon="close" size="large">
+                      {category}
+                    </Button>
+                  </Link>
+                </div>} 
               </Col>
               <Col span={1}/>
               <Col span={1}/>
@@ -101,7 +114,10 @@ class MainView extends Component {
                   bordered
                   itemLayout="vertical"
                   dataSource={Object.keys(this.props.posts)
-                    .map(key => this.props.posts[key]).sort(this.orderBy)}
+                    .map(key => this.props.posts[key])
+                    .filter(post => 
+                      post.category === category || category === undefined
+                    ).sort(this.orderBy)}
                   renderItem= {
                     post => (
                       <List.Item key={post.id}
@@ -110,7 +126,6 @@ class MainView extends Component {
                           <Icon type="like" onClick={() => this.handlePostVote(post.id)}/>, 
                           <Icon type="dislike" onClick={() => this.handlePostVote(post.id, "downVote")}/>
                         ]}>
-                      
                         <List.Item.Meta
                           title={
                             <Link to={'/post/' + post.id}>
@@ -121,7 +136,11 @@ class MainView extends Component {
                         <h4><p>Author: {post.author}</p></h4>
                         <h3><p>{post.body}</p></h3>
                         <p>Votes: {post.voteScore}</p>
-                        <p>{moment(post.timestamp).format('LLL')}</p>  
+                        <p>{moment(post.timestamp).format('LLL')}
+                          <span style={{float:"right"}}>
+                            Category:{post.category}
+                          </span>
+                        </p>  
                       </List.Item>
                     )
                   }
