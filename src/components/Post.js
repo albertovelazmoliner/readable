@@ -147,8 +147,6 @@ class Post extends Component {
               onCancel={() => {}} 
               okText="Yes" 
               cancelText="No">
-                {/* <a href="#">Delete</a> */}
-                {/* <Icon type="delete" onClick={() => this.handleDeletePost(postData.id)}/> */}
                 <Icon type="delete" /> 
             </Popconfirm>
             , 
