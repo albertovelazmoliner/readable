@@ -90,7 +90,7 @@ class MainView extends Component {
                   dataSource={this.props.categories}
                   renderItem= {
                     category => (<List.Item >
-                        <Link to={'/' + category.path}>
+                        <Link to={'/category/' + category.path}>
                         <div>{category.name}</div>
                         </Link>
                       </List.Item>)
