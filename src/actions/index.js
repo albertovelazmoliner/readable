@@ -142,7 +142,7 @@ export const fetchPost = (postId) => dispatch => {
     .catch(error => console.log(`Error`, error))
 }
 
-export const fetchAllComentss = (postId) => dispatch => {
+export const fetchAllComments = (postId) => dispatch => {
   dispatch(requestAllComments())
   return api.getAllComments(postId)
     .then(comments => dispatch(receiveAllComments(comments)))
