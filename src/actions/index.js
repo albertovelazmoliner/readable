@@ -175,9 +175,9 @@ export const deleteDeleteComment = (commentId) => dispatch => {
     .catch(error => console.log(error))
 }
 
-export const putUpdatePost = (postId, title, body) => dispatch => {
+export const putUpdatePost = (postId, author, title, body, category) => dispatch => {
   dispatch(requestUpdatePost())
-  return api.updatePost(postId, title, body)
+  return api.updatePost(postId, author, title, body, category)
     .then(post => dispatch(updatePost(post)))
     .catch(error => console.log(error))
 }
