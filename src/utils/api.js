@@ -69,14 +69,14 @@ export const votePost = (postId, option = "upVote") =>
   }).then(res => res.json())
   .catch((err) => console.log("Error => " + err))
 
-export const updatePost = (postId, title, body) =>
+export const updatePost = (postId, author, title, body, category) =>
   fetch(`${api}/posts/${postId}`, {
     method: 'PUT',
     headers: {
       ...headers,
       'Content-Type' : 'application/json'
     },
-    body: JSON.stringify({ title, body })
+    body: JSON.stringify({ author, title, body, category })
   }).then(res => res.json())
     
 export const deletePost = (postId) =>
