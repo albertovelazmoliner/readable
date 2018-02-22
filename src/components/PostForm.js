@@ -48,7 +48,11 @@ class PostFormBase extends Component {
             window.location.replace('/')
           })
         } else {
-          this.props.updatePost(post.id, values.title, values.body)
+          this.props.updatePost(post.id, 
+            values.author, 
+            values.title, 
+            values.body,
+            values.category)
           .then(() => {
             this.setState({ loading: false })
             window.location.replace('/Post/' + post.id)
@@ -96,7 +100,7 @@ class PostFormBase extends Component {
             initialValue: (post) ? post.author : "",
             rules: [{ required: true, message: 'Please input your name!' }]
           }, )(
-            <Input placeholder="Author" disabled={post != null}/>
+            <Input placeholder="Author" />
           )}
           </FormItem>
           <FormItem>
@@ -116,8 +120,6 @@ class PostFormBase extends Component {
             rules: [{ required: true, message: 'Select the category!' }]
           })(
             <Select
-              
-              disabled={post != null}
               size='large'
               onChange={this.handleCategoryChange}>
               {this.props.categories.map(category => (
@@ -149,7 +151,8 @@ function mapDispatchToProps (dispatch) {
   return {
     getCategories: () => dispatch(fetchCategories()),
     getPost: (postId) => dispatch(fetchPost(postId)),
-    updatePost: (postId, title, body) => dispatch(putUpdatePost(postId, title, body)),
+    updatePost: (postId, author, title, body, category) =>
+     dispatch(putUpdatePost(postId, author, title, body, category)),
     cleanPost: () => dispatch(removeSelectedPost()),
     postPost: (post) => dispatch(createPost(post))
   }
