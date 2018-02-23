@@ -128,7 +128,9 @@ class MainView extends Component {
                         ]}>
                         <List.Item.Meta
                           title={
-                            <Link to={'/post/' + post.id}>
+                            <Link to={(category !== undefined) 
+                              ? `/post/${category}/${post.id}` 
+                              : `/post/${post.id}`}>
                               {post.title}
                             </Link>
                           }
