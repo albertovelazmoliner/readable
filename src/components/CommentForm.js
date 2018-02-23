@@ -12,7 +12,7 @@ class BaseForm extends Component {
 
   static propTypes = {
     selectedComment: PropTypes.object,
-    update: PropTypes.bool
+    update: PropTypes.bool.isRequired
   }
 
   handleSubmit = (e) => {
