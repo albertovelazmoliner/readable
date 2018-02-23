@@ -4,6 +4,7 @@ import { Button, Form, Input, Select, Layout } from 'antd'
 import './PostForm.css'
 import uuid from 'uuid/v1'
 import { fetchCategories, fetchPost, putUpdatePost, removeSelectedPost, createPost } from '../actions'
+import PropTypes from 'prop-types'
 
 const { TextArea } = Input;
 const FormItem = Form.Item
@@ -11,6 +12,17 @@ const Option = Select.Option;
 const { Header, Content } = Layout
 
 class PostFormBase extends Component {
+
+  static propTypes = {
+    posts: PropTypes.object.isRequired,
+    post: PropTypes.object,
+    categories: PropTypes.array.isRequired,
+    getCategories: PropTypes.func.isRequired,
+    getPost: PropTypes.func.isRequired,
+    updatePost: PropTypes.func.isRequired,
+    cleanPost: PropTypes.func.isRequired,
+    postPost: PropTypes.func.isRequired
+  }
 
   state = {
     loading: false,
