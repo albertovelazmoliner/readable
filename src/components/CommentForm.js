@@ -1,5 +1,6 @@
 import React, { Component } from  'react'
 import { Modal, Button, Form, Input } from 'antd'
+import PropTypes from 'prop-types'
 
 const { TextArea } = Input;
 const FormItem = Form.Item
@@ -7,6 +8,11 @@ const FormItem = Form.Item
 class BaseForm extends Component {
   state = {
     loading: false
+  }
+
+  static propTypes = {
+    selectedComment: PropTypes.object,
+    update: PropTypes.bool
   }
 
   handleSubmit = (e) => {
