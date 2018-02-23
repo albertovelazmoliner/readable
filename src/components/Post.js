@@ -16,10 +16,26 @@ import './Post.css'
 import CommentForm from './CommentForm'
 import uuid from 'uuid/v1'
 import CommentsList from './CommentsList'
+import PropTypes from 'prop-types'
 
 const { Header, Content } = Layout
 
 class Post extends Component {
+
+  static propTypes = {
+    posts: PropTypes.object.isRequired,
+    post: PropTypes.object,
+    comments: PropTypes.object.isRequired,
+    getPost: PropTypes.func.isRequired,
+    cleanPost: PropTypes.func.isRequired,
+    getComments: PropTypes.func.isRequired,
+    postComment: PropTypes.func.isRequired,
+    deletePost: PropTypes.func.isRequired,
+    sendPostVote: PropTypes.func.isRequired,
+    sendCommentVote: PropTypes.func.isRequired,
+    sendCommentUpdate: PropTypes.func.isRequired,
+    sendDeleteComment: PropTypes.func.isRequired,
+  }
 
   state = {
     commentAddFormVisibility: false,
