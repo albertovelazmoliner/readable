@@ -19,7 +19,11 @@ class MainView extends Component {
   static propTypes = {
     order: PropTypes.string.isRequired,
     posts: PropTypes.object.isRequired,
-    categories: PropTypes.array.isRequired
+    categories: PropTypes.array.isRequired,
+    getCategories: PropTypes.func.isRequired,
+    getAllPosts: PropTypes.func.isRequired,
+    sendPostVote: PropTypes.func.isRequired,
+    changePostOrder: PropTypes.func.isRequired
   }
   
   componentDidMount() {
