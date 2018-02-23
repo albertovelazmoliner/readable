@@ -207,6 +207,7 @@ class Post extends Component {
         <CommentForm 
           visible={this.state.commentAddFormVisibility}  
           okText="Save"
+          update={false}
           cancelText="Cancel"
           onCancel = {() => this.hideAddModal()}
           onOk = {(comment) =>  this.saveComment(comment)} />
