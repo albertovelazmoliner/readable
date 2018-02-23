@@ -34,7 +34,7 @@ class Post extends Component {
     sendPostVote: PropTypes.func.isRequired,
     sendCommentVote: PropTypes.func.isRequired,
     sendCommentUpdate: PropTypes.func.isRequired,
-    sendDeleteComment: PropTypes.func.isRequired,
+    sendDeleteComment: PropTypes.func.isRequired
   }
 
   state = {
