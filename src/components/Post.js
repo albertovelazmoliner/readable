@@ -9,13 +9,15 @@ import { fetchPost,
          postVoteComment,
          putUpdateComment,
          deleteDeleteComment } from '../actions'
-import { Card, Icon, Button, Popconfirm, Spin } from 'antd'
+import { Card, Icon, Button, Popconfirm, Spin, Layout } from 'antd'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
 import './Post.css'
 import CommentForm from './CommentForm'
 import uuid from 'uuid/v1'
 import CommentsList from './CommentsList'
+
+const { Header, Content } = Layout
 
 class Post extends Component {
 
@@ -127,6 +129,15 @@ class Post extends Component {
       .catch(error => console.log(error))
   }
 
+  handleBack = () => {
+    const category = this.props.match.params.category
+    if (category != null) {
+      window.location.replace('/category/' + category)
+    } else {
+      window.location.replace('/')
+    }
+  }
+
   render() {
     const postData = this.props.post
     const comments = this.props.comments
@@ -138,7 +149,21 @@ class Post extends Component {
         </div>)
     }
     return (
-      <div style={{padding:20}}>
+      <div>
+      <Layout style={{backgroundColor:"#ffffff"}}>
+        <Header >
+          <div>
+            <Button type="primary" icon="left"
+              onClick={() => this.handleBack()}
+            >
+              Back
+            </Button >
+            <span style={{color:"#ffffff", marginLeft:"20px"}}>
+              POST DETAIL
+            </span>
+          </div>
+        </Header>
+        <Content style={{padding:"20px"}}>
         <Card title={postData.title} style={{ width:"50%", margin:"auto"}}
           actions={[
             <Link to={'/PostForm/' + postData.id}><Icon type="edit" /></Link>, 
@@ -195,6 +220,8 @@ class Post extends Component {
           selectedComment={this.state.selectedComment}
           onCancel = {() => this.hideUpdateModal()}
           onOk = {(comment) =>  this.updateComment(comment)} />
+          </Content>
+          </Layout>
       </div>
     )
   }
