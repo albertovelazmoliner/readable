@@ -6,6 +6,7 @@ import moment from 'moment'
 import 'antd/dist/antd.css' 
 import { connect } from 'react-redux'
 import { fetchCategories, fetchAllPosts, postVotePost, requestChangePostOrder } from '../actions'
+import PropTypes from 'prop-types'
 
 const {Content } = Layout;
 
@@ -14,6 +15,12 @@ export const ORDER_BY_VOTE = 'vote'
 export const ORDER_BY_TITLE = 'title'
 
 class MainView extends Component {
+
+  static propTypes = {
+    order: PropTypes.string.isRequired,
+    posts: PropTypes.object.isRequired,
+    categories: PropTypes.array.isRequired
+  }
   
   componentDidMount() {
     const category = this.props.match.params.category
