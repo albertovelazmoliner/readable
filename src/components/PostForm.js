@@ -78,63 +78,85 @@ class PostFormBase extends Component {
     this.setState({ category })
   )
 
+  handleBack = () => {
+    const { post } = this.props
+    if (post != null) {
+      window.location.replace(`/post/${post.id}`)
+    } else {
+      window.location.replace('/')
+    }
+  }
+
   render() {
     const { getFieldDecorator } = this.props.form;
     const { post } = this.props
-    const title = post ? "Edit this post" : "Create a new post"
+    const title = post ? "EDIT THIS POST" : "CREATE A NEW POST"
     return (
       <div >
-        <h3 className="post-form title-form">
-          {title}
-        </h3>
-        <Form className="post-form">
-        <FormItem>
-        {getFieldDecorator('title', {
-            initialValue: (post) ? post.title : "",
-            rules: [{ required: true, message: 'Please input the title!' }]
-          }, )(
-            <Input placeholder="Title"/>
-          )}
-          </FormItem>
-          <FormItem>
-          {getFieldDecorator('author', {
-            initialValue: (post) ? post.author : "",
-            rules: [{ required: true, message: 'Please input your name!' }]
-          }, )(
-            <Input placeholder="Author" />
-          )}
-          </FormItem>
-          <FormItem>
-          {getFieldDecorator('body', {
-            initialValue: (post) ? post.body : "",
-            rules: [{ required: true, message: 'Please input your text here!' }]
-          })(
-            <TextArea placeholder="Text" rows={6}/>
-          )}
-          </FormItem>
-          <h4 className="form-title-category">
-            Category
-          </h4>
-          <FormItem>
-          {getFieldDecorator('category', {
-            initialValue: (post) ? post.category : this.state.category,
-            rules: [{ required: true, message: 'Select the category!' }]
-          })(
-            <Select
-              size='large'
-              onChange={this.handleCategoryChange}>
-              {this.props.categories.map(category => (
-                <Option value={category.name} key={category.path}>{category.name}</Option>
-              ))}
-            </Select>
-          )}
-          </FormItem>
-          <Button key="submit" type="primary" className="save-post"
-              loading={this.state.loading}
-              onClick={this.handleSubmit}>
-                Save Post
-            </Button>
-        </Form>
+        <Layout style={{backgroundColor:"#ffffff"}}>
+          <Header >
+            <div>
+              <Button type="primary" icon="left"
+                onClick={() => this.handleBack()}
+              >
+                Back
+              </Button >
+              <span style={{color:"#ffffff", marginLeft:"20px"}}>
+              {title}
+              </span>
+            </div>
+          </Header>
+          <Content style={{padding:"20px"}}>
+            <Form className="post-form">
+            <FormItem>
+            {getFieldDecorator('title', {
+                initialValue: (post) ? post.title : "",
+                rules: [{ required: true, message: 'Please input the title!' }]
+              }, )(
+                <Input placeholder="Title"/>
+              )}
+              </FormItem>
+              <FormItem>
+              {getFieldDecorator('author', {
+                initialValue: (post) ? post.author : "",
+                rules: [{ required: true, message: 'Please input your name!' }]
+              }, )(
+                <Input placeholder="Author" />
+              )}
+              </FormItem>
+              <FormItem>
+              {getFieldDecorator('body', {
+                initialValue: (post) ? post.body : "",
+                rules: [{ required: true, message: 'Please input your text here!' }]
+              })(
+                <TextArea placeholder="Text" rows={6}/>
+              )}
+              </FormItem>
+              <h4 className="form-title-category">
+                Category
+              </h4>
+              <FormItem>
+              {getFieldDecorator('category', {
+                initialValue: (post) ? post.category : this.state.category,
+                rules: [{ required: true, message: 'Select the category!' }]
+              })(
+                <Select
+                  size='large'
+                  onChange={this.handleCategoryChange}>
+                  {this.props.categories.map(category => (
+                    <Option value={category.name} key={category.path}>{category.name}</Option>
+                  ))}
+                </Select>
+              )}
+              </FormItem>
+              <Button key="submit" type="primary" className="save-post"
+                  loading={this.state.loading}
+                  onClick={this.handleSubmit}>
+                    Save Post
+                </Button>
+            </Form>
+          </Content>
+        </Layout>
       </div>
     )
   }
