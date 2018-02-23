@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Button, Form, Input, Select } from 'antd'
+import { Button, Form, Input, Select, Layout } from 'antd'
 import './PostForm.css'
 import uuid from 'uuid/v1'
 import { fetchCategories, fetchPost, putUpdatePost, removeSelectedPost, createPost } from '../actions'
@@ -8,6 +8,7 @@ import { fetchCategories, fetchPost, putUpdatePost, removeSelectedPost, createPo
 const { TextArea } = Input;
 const FormItem = Form.Item
 const Option = Select.Option;
+const { Header, Content } = Layout
 
 class PostFormBase extends Component {
 
