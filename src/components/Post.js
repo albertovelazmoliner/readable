@@ -217,7 +217,6 @@ class Post extends Component {
           okText="Save"
           cancelText="Cancel"
           update={true}
-          loadingForm={this.state.loadingForm}
           selectedComment={this.state.selectedComment}
           onCancel = {() => this.hideUpdateModal()}
           onOk = {(comment) =>  this.updateComment(comment)} />
