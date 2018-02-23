@@ -1,6 +1,7 @@
 import React from 'react'
 import { List, Button } from 'antd'
 import moment from 'moment'
+import PropTypes from 'prop-types'
 
 const CommentsList = (props) => {
     return (
@@ -36,6 +37,14 @@ const CommentsList = (props) => {
         />
       </div>
     )
+}
+
+CommentsList.propTypes = {
+  comments: PropTypes.array.isRequired,
+  voteHandlerUp: PropTypes.func.isRequired,
+  voteHandlerDown: PropTypes.func.isRequired,
+  editHandler: PropTypes.func.isRequired,
+  deleteHandler: PropTypes.func.isRequired
 }
 
 export default CommentsList
