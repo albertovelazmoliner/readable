@@ -11,6 +11,13 @@ const headers = {
   'Authorization': token
 }
 
+const myFetch = (url, options) => fetch(url, options).catch(err => {
+  // show toast
+
+  
+  throw err
+})
+
 export const getCategories = () =>
   fetch(`${api}/categories`, { headers })
     .then(res => res.json())

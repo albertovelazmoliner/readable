@@ -138,6 +138,7 @@ class MainView extends Component {
                         <h4><p>Author: {post.author}</p></h4>
                         <h3><p>{post.body}</p></h3>
                         <p>Votes: {post.voteScore}</p>
+                        <p>Comments: {post.commentCount}</p>
                         <p>{moment(post.timestamp).format('LLL')}
                           <span style={{float:"right"}}>
                             Category:{post.category}

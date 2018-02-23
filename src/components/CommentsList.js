@@ -6,7 +6,7 @@ const CommentsList = (props) => {
     return (
       <div>
         <div className="flex-container">
-          <h3>Comments:</h3>
+          <h3>Comments: {props.comments.length}</h3>
         </div>
         <br/>
         <List
