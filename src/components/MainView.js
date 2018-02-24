@@ -101,7 +101,7 @@ class MainView extends Component {
                   dataSource={this.props.categories}
                   renderItem= {
                     category => (<List.Item >
-                        <Link to={'/category/' + category.path}>
+                        <Link to={'/' + category.path}>
                         <div>{category.name}</div>
                         </Link>
                       </List.Item>)
@@ -139,9 +139,7 @@ class MainView extends Component {
                         ]}>
                         <List.Item.Meta
                           title={
-                            <Link to={(category !== undefined) 
-                              ? `/post/${category}/${post.id}` 
-                              : `/post/${post.id}`}>
+                            <Link to={`/${category}/${post.id}`}>
                               {post.title}
                             </Link>
                           }
