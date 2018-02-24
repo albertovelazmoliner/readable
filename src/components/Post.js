@@ -146,12 +146,7 @@ class Post extends Component {
   }
 
   handleBack = () => {
-    const category = this.props.match.params.category
-    if (category != null) {
-      window.location.replace('/category/' + category)
-    } else {
-      window.location.replace('/')
-    }
+    this.props.history.goBack()
   }
 
   render() {
