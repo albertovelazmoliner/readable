@@ -68,7 +68,7 @@ class PostFormBase extends Component {
             values.category)
           .then(() => {
             this.setState({ loading: false })
-            window.location.replace('/Post/' + post.id)
+            this.props.history.goBack()
           })
         }
       }
