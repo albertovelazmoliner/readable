@@ -91,12 +91,7 @@ class PostFormBase extends Component {
   )
 
   handleBack = () => {
-    const { post } = this.props
-    if (post != null) {
-      window.location.replace(`/post/${post.id}`)
-    } else {
-      window.location.replace('/')
-    }
+    this.props.history.goBack()
   }
 
   render() {
