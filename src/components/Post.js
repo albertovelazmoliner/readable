@@ -45,7 +45,7 @@ class Post extends Component {
   }
   
   componentDidMount() {
-    const postId = this.props.match.params.id
+    const postId = this.props.match.params.post_id
     if (!this.posts) {
       this.props.getPost(postId)
     } else {
@@ -103,7 +103,7 @@ class Post extends Component {
   }
 
   generateDataComment = (values) => {
-    const postId = this.props.match.params.id
+    const postId = this.props.match.params.post_id
     const comment = {}
     comment.author = values.author
     comment.body = values.body
