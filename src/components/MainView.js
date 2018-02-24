@@ -5,7 +5,11 @@ import { Select, Icon, Row, Col, List, Button, Layout, Popconfirm } from 'antd'
 import moment from 'moment'
 import 'antd/dist/antd.css' 
 import { connect } from 'react-redux'
-import { fetchCategories, fetchAllPosts, postVotePost, requestChangePostOrder } from '../actions'
+import { fetchCategories, 
+         fetchAllPosts, 
+         postVotePost, 
+         requestChangePostOrder, 
+         deleteDeletePost } from '../actions'
 import PropTypes from 'prop-types'
 
 const {Content } = Layout;
@@ -23,6 +27,7 @@ class MainView extends Component {
     getCategories: PropTypes.func.isRequired,
     getAllPosts: PropTypes.func.isRequired,
     sendPostVote: PropTypes.func.isRequired,
+    deletePost: PropTypes.func.isRequired,
     changePostOrder: PropTypes.func.isRequired
   }
   
@@ -61,6 +66,10 @@ class MainView extends Component {
   handleChange = (value) => {
     console.log(value)
     this.props.changePostOrder(value)
+  }
+
+  handleDeletePost = (postId) => {
+    this.props.deletePost(postId)
   }
 
   render() {
@@ -127,7 +136,8 @@ class MainView extends Component {
                   dataSource={Object.keys(this.props.posts)
                     .map(key => this.props.posts[key])
                     .filter(post => 
-                      post.category === category || category === undefined
+                      (post.category === category || category === undefined)
+                      && (post.deleted === false)
                     ).sort(this.orderBy)}
                   renderItem= {
                     post => (
@@ -189,6 +199,7 @@ function mapDispatchToProps (dispatch) {
     getCategories: () => dispatch(fetchCategories()),
     getAllPosts: () => dispatch(fetchAllPosts()),
     sendPostVote: (postId, voteOption) => dispatch(postVotePost(postId, voteOption)),
+    deletePost: (postId) => dispatch(deleteDeletePost(postId)),
     changePostOrder: (order) => dispatch(requestChangePostOrder(order))
   }
 }
