@@ -8,8 +8,8 @@ class ReadableApp extends React.Component {
   render() {
     return (
       <div className="app">
-        <Route exact path="/PostForm/:id" component={PostForm} />
-        <Route exact path="/PostForm" component={PostForm} />
+        <Route exact path="/posts/edit/:post_id" component={PostForm} />
+        <Route exact path="/posts/post/new" component={PostForm} />
         <Route exact path="/" component={MainView} />
         <Route exact path="/:category" component={MainView} />
         <Route exact path="/:category/:post_id" component={Post} />
