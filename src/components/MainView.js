@@ -134,6 +134,15 @@ class MainView extends Component {
                       <List.Item key={post.id}
                         className="list-item"
                         actions={[
+                          <Link to={'/posts/edit/' + post.id}><Icon type="edit" /></Link>, 
+                          <Popconfirm title="Are you sure delete this task?" 
+                            onConfirm={() => this.handleDeletePost(post.id)} 
+                            onCancel={() => {}} 
+                            okText="Yes" 
+                            cancelText="No">
+                              <Icon type="delete" /> 
+                          </Popconfirm>
+                          , 
                           <Icon type="like" onClick={() => this.handlePostVote(post.id)}/>, 
                           <Icon type="dislike" onClick={() => this.handlePostVote(post.id, "downVote")}/>
                         ]}>
