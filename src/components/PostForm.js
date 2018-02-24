@@ -30,7 +30,7 @@ class PostFormBase extends Component {
   }
 
   componentDidMount() {
-    const postId = this.props.match.params.id
+    const postId = this.props.match.params.post_id
     if (postId) {
       if (!this.posts) {
         this.props.getPost(postId)
