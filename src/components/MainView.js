@@ -73,7 +73,7 @@ class MainView extends Component {
           <Row>
             <Col span={1}/>
             <Col span={2}>
-            <Link to="/PostForm">
+            <Link to="/posts/post/new">
               <Button type="primary" icon="plus" size="large">
                 Create a new Post
               </Button>
