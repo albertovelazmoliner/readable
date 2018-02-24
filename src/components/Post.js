@@ -177,7 +177,7 @@ class Post extends Component {
         <Content style={{padding:"20px"}}>
         <Card title={postData.title} style={{ width:"50%", margin:"auto"}}
           actions={[
-            <Link to={'/PostForm/' + postData.id}><Icon type="edit" /></Link>, 
+            <Link to={'/posts/edit/' + postData.id}><Icon type="edit" /></Link>, 
             <Popconfirm title="Are you sure delete this task?" 
               onConfirm={() => this.handleDeletePost(postData.id)} 
               onCancel={() => {}} 
@@ -205,7 +205,7 @@ class Post extends Component {
           editHandler={comment => this.editComment(comment)}
           deleteHandler={comment => this.deletComment(comment.id)}
         />
-        <Link to='/PostForm'>
+        <Link to='/posts/post/new'>
           <Button className="new-post" type="primary" icon="plus" size="large">
             Add a new post
           </Button>
