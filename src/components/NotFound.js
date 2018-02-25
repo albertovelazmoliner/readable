@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Icon, Button } from 'antd'
+import { Card, Button } from 'antd'
 
 const NotFound = (props) => {
   return (
