@@ -48,8 +48,13 @@ class Post extends Component {
     const postId = this.props.match.params.post_id
     if (!this.posts) {
       this.props.getPost(postId)
+      .then(post => (post === undefined) ?
+        window.location.replace('/notFound/404/template') : () => {})
     } else {
       this.props.post = this.posts2[postId]
+      if (this.props.post.title === undefined) {
+        window.location.replace('/notFound/404/template')
+      }
     }
     this.props.getComments(postId)
   }
