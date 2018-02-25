@@ -158,7 +158,7 @@ class MainView extends Component {
                         ]}>
                         <List.Item.Meta
                           title={
-                            <Link to={`/${category}/${post.id}`}>
+                            <Link to={`/${post.category}/${post.id}`}>
                               {post.title}
                             </Link>
                           }
