@@ -11,6 +11,7 @@ import { fetchCategories,
          requestChangePostOrder, 
          deleteDeletePost } from '../actions'
 import PropTypes from 'prop-types'
+import NotFound from './NotFound';
 
 const {Content } = Layout;
 
@@ -75,6 +76,10 @@ class MainView extends Component {
   render() {
     const Option = Select.Option
     const category = this.props.match.params.category
+    if (category != undefined && 
+    this.props.categories.filter(cat => cat.name == category).length == 0) {
+      return <NotFound/>
+    }
     return (
       <div className="container-mainview">
         <Layout>
