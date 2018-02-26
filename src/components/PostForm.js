@@ -5,6 +5,7 @@ import './PostForm.css'
 import uuid from 'uuid/v1'
 import { fetchCategories, fetchPost, putUpdatePost, removeSelectedPost, createPost } from '../actions'
 import PropTypes from 'prop-types'
+import NotFound from './NotFound';
 
 const { TextArea } = Input;
 const FormItem = Form.Item
@@ -98,6 +99,10 @@ class PostFormBase extends Component {
     const { getFieldDecorator } = this.props.form;
     const { post } = this.props
     const title = post ? "EDIT THIS POST" : "CREATE A NEW POST"
+
+    if (post != undefined && post.title === undefined) {
+      return <NotFound/>
+    }
     return (
       <div >
         <Layout style={{backgroundColor:"#ffffff"}}>
