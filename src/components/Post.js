@@ -17,6 +17,7 @@ import CommentForm from './CommentForm'
 import uuid from 'uuid/v1'
 import CommentsList from './CommentsList'
 import PropTypes from 'prop-types'
+import NotFound from './NotFound';
 
 const { Header, Content } = Layout
 
@@ -48,13 +49,8 @@ class Post extends Component {
     const postId = this.props.match.params.post_id
     if (!this.posts) {
       this.props.getPost(postId)
-      .then(post => (post === undefined) ?
-        window.location.replace('/notFound/404/template') : () => {})
     } else {
       this.props.post = this.posts2[postId]
-      if (this.props.post.title === undefined) {
-        window.location.replace('/notFound/404/template')
-      }
     }
     this.props.getComments(postId)
   }
@@ -158,11 +154,13 @@ class Post extends Component {
     const postData = this.props.post
     const comments = this.props.comments
 
-    if (!this.props.post) {
+    if (!postData) {
       return (
         <div> 
           <Spin size="large" />
         </div>)
+    } else if (postData && postData.id === undefined) {
+      return <NotFound/>
     }
     return (
       <div>
