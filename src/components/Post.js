@@ -153,6 +153,7 @@ class Post extends Component {
   render() {
     const postData = this.props.post
     const comments = this.props.comments
+    const urlCategory = this.props.match.params.category
 
     if (!postData) {
       return (
