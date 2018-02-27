@@ -159,7 +159,8 @@ class Post extends Component {
         <div> 
           <Spin size="large" />
         </div>)
-    } else if (postData && postData.id === undefined) {
+    } else if ((postData && postData.id === undefined) 
+            || (postData && postData.category !== urlCategory) ) {
       return <NotFound/>
     }
     return (
