@@ -100,7 +100,7 @@ class PostFormBase extends Component {
     const { post } = this.props
     const title = post ? "EDIT THIS POST" : "CREATE A NEW POST"
 
-    if (post != undefined && post.title === undefined) {
+    if (post !== undefined && post.title === undefined) {
       return <NotFound/>
     }
     return (
